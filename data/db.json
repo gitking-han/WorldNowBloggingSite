@@ -1,0 +1,253 @@
+{
+  "categories": [
+    {
+      "name": "World",
+      "slug": "world",
+      "description": "Global affairs, foreign policy, and international events."
+    },
+    {
+      "name": "Economy",
+      "slug": "economy",
+      "description": "Financial markets, fiscal policy, commerce, and trade."
+    },
+    {
+      "name": "Technology",
+      "slug": "technology",
+      "description": "Artificial intelligence, electronic innovation, mobile hardware, and startups."
+    },
+ 
+    {
+      "name": "Sports",
+      "slug": "sports",
+      "description": "Cricket updates, national squad announcements, and regional fixtures."
+    },
+    {
+      "name": "Culture",
+      "slug": "culture",
+      "description": "Arts, literature festivals, cinema, and societal changes."
+    },
+    {
+      "name": "Science",
+      "slug": "science",
+      "description": "Climate research, medicine, space exploration, and innovation."
+    }
+  ],
+  "regions": [
+    { "name": "Europe", "slug": "europe", "description": "Coverage desk for Europe and EU developments." },
+    { "name": "America", "slug": "america", "description": "Coverage desk for the Americas and North/South America news." },
+    { "name": "Asia", "slug": "asia", "description": "Coverage desk for Asia and regional developments." },
+    { "name": "Middle East", "slug": "middle-east", "description": "Coverage desk for the Middle East and Gulf reporting." },
+    { "name": "Africa", "slug": "africa", "description": "Coverage desk for Africa and continental updates." },
+    { "name": "Oceania", "slug": "oceania", "description": "Coverage desk for Oceania and Pacific coverage." },
+    { "name": "Global", "slug": "global", "description": "Coverage desk for worldwide and cross-border stories." }
+  ],
+  "blogs": [
+    {
+      "title": "Trump Arrives in Beijing for High-Stakes China Visit",
+      "slug": "trump-arrives-in-beijing-for-high-stakes-china-visit",
+      "content": "Global markets are once again watching Washington and Beijing closely as former U.S. President Donald Trump arrives in Beijing for a contentious high-stakes diplomatic visit. Aimed at easing trade tensions and resetting bilateral ties, the visit comes at a time when the global system is facing major geopolitical changes.\n\nThe relationship between the United States and China remains one of the defining economic and strategic rivalries of the 21st century. Over the past decade, bilateral activities have shifted from economic collaboration to deep structural competition. Issues ranging from semiconductor supply chains to bilateral trade deficits have strained the relationship.\n\nThis high-profile visit marks a critical juncture. Corporate leaders and investors globally are watching if any agreements can be reached on tariff reductions, currency stability, and technology exports.",
+      "excerpt": "The U.S. president begins a contentious diplomatic visit aimed at easing trade tensions and resetting ties with China.",
+      "category": "world",
+      "tags": [
+        "world",
+        "diplomacy",
+        "china",
+        "us"
+      ],
+      "featuredImage": "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=800&q=80",
+      "author": "Kiran Shah",
+      "readingTime": "5 min read",
+      "views": 48200,
+      "status": "published",
+      "seoTitle": "Trump Arrives in Beijing for High-Stakes China Office Visit - WORLD NOW",
+      "metaDescription": "Follow current developments as former US President Donald Trump visits Beijing amidst intense global trade discussions and security talks.",
+      "isFeatured": true,
+      "createdAt": "2026-05-31T11:00:28.078Z"
+    },
+    {
+      "title": "DeepSeek vs ChatGPT: Why the US-China AI Race Matters for the Pacific",
+      "slug": "deepseek-vs-chatgpt-why-the-us-china-ai-race-matters-for-the-pacific",
+      "content": "The artificial intelligence race between the United States and China is rapidly becoming one of the most important global power struggles of the modern era. What began as a competition between technology companies has evolved into a wider battle over economic influence, digital infrastructure, cybersecurity, education, and global leadership.\n\nAt the center of this rivalry are powerful AI systems such as OpenAI’s GPT models, including ChatGPT, and China’s rapidly emerging competitor DeepSeek AI. These technologies are reshaping industries, governments, and societies worldwide.\n\nWhile the US and China dominate headlines, the effects of this AI competition are increasingly reaching smaller nations across the Pacific region, including Samoa, Fiji, and Tonga.\n\n### Why the US vs China AI Race Matters\n\nFor Pacific nations, the AI revolution presents both enormous opportunities and serious risks. AI could improve education, healthcare, climate resilience, and digital economies. At the same time, it may create new forms of technological dependence, cybersecurity threats, and digital sovereignty concerns.\n\nChatGPT has become globally dominant because of its advanced language understanding and massive developer ecosystem. However, China's DeepSeek AI has attracted international attention by demonstrating extreme cost efficiency and high coding performance.\n\nThe decisions Pacific nations make today about AI infrastructure, governance, and digital partnerships could shape the region's future for decades.",
+      "excerpt": "A deep dive into how the global AI rivalry is shaping education, cybersecurity, and digital sovereignty across Pacific nations.",
+      "category": "technology",
+      "tags": [
+        "ai",
+        "tech",
+        "us",
+        "china",
+        "deepseek",
+        "chatgpt"
+      ],
+      "featuredImage": "https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=800&q=80",
+      "author": "WORLD NOW Desk",
+      "readingTime": "8 min read",
+      "views": 29600,
+      "status": "published",
+      "seoTitle": "DeepSeek vs ChatGPT: The Pacific Geopolitical Tech Rivalry",
+      "metaDescription": "Understand the implications of the US-China artificial intelligence race on Pacific nations' digital sovereignty and educational systems.",
+      "isFeatured": false,
+      "createdAt": "2026-05-30T11:00:28.079Z"
+    },
+    {
+      "title": "State Bank Keeps Rate on Hold, Cites Slower Inflation and Stable Forex",
+      "slug": "state-bank-keeps-rate-on-hold-cites-slower-inflation-and-stable-forex",
+      "content": "The Monetary Policy Committee of the State Bank of Pakistan decided today to hold interest rates steady at 11.5 percent. The central bank cited slower-than-expected headline inflation and stable foreign exchange reserves as key factors supporting cautious optimism.\n\nAccording to the MPC statement, retail sales have stabilized, and agricultural yields in Punjab are showing solid projections. This stable policy rate environment is intended to protect economic recovery while continuing to anchor inflation expectations.\n\nIndustry representatives welcome the decision, stating that policy certainty is the foundation for long-term growth and private sector investments. High debt servicing costs remain a challenge, but easing import restrictions could provide relief to key manufacturing sectors in the coming quarters.",
+      "excerpt": "The central bank held interest rates steady at 11.5%, saying growth is picking up while headline inflation remains within target range.",
+      "category": "economy",
+      "tags": [
+        "economy",
+        "sbp",
+        "pakistan",
+        "finance"
+      ],
+      "featuredImage": "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80",
+      "author": "Sana Qureshi",
+      "readingTime": "4 min read",
+      "views": 35300,
+      "status": "published",
+      "seoTitle": "SBP Monetary Policy: Rates Held at 11.5% Amid Inflation Anchor",
+      "metaDescription": "Read the latest SBP statement regarding interest rates, foreign exchange stability, and macroeconomic projections for Pakistan.",
+      "isFeatured": false,
+      "createdAt": "2026-05-31T23:00:28.079Z"
+    },
+    {
+      "title": "How a Trump–Xi Meeting Could Reshape the Global Economy",
+      "slug": "how-a-trump-xi-meeting-could-reshape-the-global-economy",
+      "content": "Global markets are once again watching Washington and Beijing closely as speculation grows around a possible meeting between former U.S. President Donald Trump and Chinese President Xi Jinping. \n\nAt a time when the world economy is already facing geopolitical instability, inflation concerns, supply chain disruptions, and growing technological competition, even a single high-level diplomatic meeting between the leaders of the world's two largest economies could have far-reaching consequences.\n\nFrom financial markets and international trade to artificial intelligence and global security, the outcome of any Trump–Xi engagement would likely influence not only the United States and China, but the direction of the international economic system itself.\n\n### Key Points of Impact\n\n1. **Global Trade Stability**: Easing tariff escalation and stabilizing supply lines.\n2. **Financial Volatility**: Reducing market uncertainty and bolstering investor confidence.\n3. **Technology Cold War**: Balancing semiconductor export controls with domestic self-reliance.",
+      "excerpt": "Global markets are once again watching Washington and Beijing closely as speculation grows around a possible meeting between Donald Trump and Xi Jinping.",
+      "category": "world",
+      "tags": [
+        "world",
+        "economy",
+        "us",
+        "china",
+        "trade"
+      ],
+      "featuredImage": "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=800&q=80",
+      "author": "Kiran Shah",
+      "readingTime": "7 min read",
+      "views": 45700,
+      "status": "published",
+      "isFeatured": false,
+      "createdAt": "2026-06-01T11:00:28.079Z"
+    },
+    {
+      "title": "Lahore Literary Festival Opens With Conversations on Home and Belonging",
+      "slug": "lahore-literary-festival-opens-with-conversations-on-home-and-belonging",
+      "content": "Writers, artists, and historians from across South Asia gathered in Lahore today for the opening of the Lahore Literary Festival. This year's sessions focus heavily on the themes of home, migration, memory, and local identity in a rapidly globalizing world.\n\nKey speakers emphasized the power of storytelling in bridging cultural divides and preserving the rich regional memories of historical Haveli structures of Lahore and the heritage of Punjab.\n\n\"The festival remains a crucial space for critical thinking and cultural interaction,\" remarked a visiting novelist. Parallel exhibitions highlight National Gallery's modernist curators and local folk musicians performing river ravines compositions.",
+      "excerpt": "Writers from across South Asia discuss the stories that define identity, migration and memory in a changing world.",
+      "category": "culture",
+      "tags": [
+        "culture",
+        "lahore",
+        "literature",
+        "heritage"
+      ],
+      "featuredImage": "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&q=80",
+      "author": "Meera Khan",
+      "readingTime": "5 min read",
+      "views": 55700,
+      "status": "published",
+      "isFeatured": false,
+      "createdAt": "2026-06-01T08:00:28.079Z"
+    },
+    {
+      "title": "The Debate Pakistan Cannot Ignore: Progress Versus Preservation",
+      "slug": "the-debate-pakistan-cannot-ignore-progress-versus-preservation",
+      "content": "Pakistan stands at a crossroad where rapid urbanization meets historical conservation. From Lahore's ancient walled city to the green Belts of Islamabad, development plans frequently conflict with structural heritage and green spaces.\n\nEconomic analysts argue that growth demands modernized infrastructure, metro lines, and smart commercial business districts. At the same time, conservationists warn that destroying historical architecture and public spaces risks erasing local identity and accelerating climate vulnerability.\n\nFinding a middle ground requires careful planning, transparent policy, and prioritizing sustainable public projects that serve local needs without destroying provincial memory.",
+      "excerpt": "From constitutional reform to economic change, voices across the country are asking whether speed and stability can be reconciled.",
+      "category": "opinions",
+      "tags": [
+        "policy",
+        "preservation",
+        "economy",
+        "heritage"
+      ],
+      "featuredImage": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
+      "author": "Fariha Ali",
+      "readingTime": "6 min read",
+      "views": 62100,
+      "status": "published",
+      "isFeatured": false,
+      "createdAt": "2026-06-01T06:00:28.079Z"
+    },
+    {
+      "title": "Trump Says Iran Agrees to Give Up Nuclear Weapons as Talks Continue",
+      "slug": "trump-says-iran-agrees-to-give-up-nuclear-weapons-as-talks-continue",
+      "content": "Widespread expectations grew as President Donald Trump announced that preliminary diplomatic exchanges show Tehran is prepared to discuss abandoning nuclear weapon ambitions. While details remain sparse, talks in Geneva continue behind closed doors.\n\nSanctions relief, access to frozen international assets, and security guarantees are expected to be the main points of contention. Skeptics warn that reaching a comprehensive agreement will take significant bilateral concessions.",
+      "excerpt": "President Trump says Iran has agreed to abandon nuclear weapons ambitions, but major issues remain over sanctions, frozen assets and regional security.",
+      "category": "world",
+      "tags": [
+        "world",
+        "diplomacy",
+        "iran",
+        "us"
+      ],
+      "featuredImage": "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=800&q=80",
+      "author": "Editorial Desk",
+      "readingTime": "4 min read",
+      "views": 31700,
+      "status": "published",
+      "isFeatured": false,
+      "createdAt": "2026-06-01T09:00:28.079Z"
+    },
+    {
+      "title": "Science Ministry Funds New Climate Resilience Research in Sindh",
+      "slug": "science-ministry-funds-new-climate-resilience-research-in-sindh",
+      "content": "To build institutional capacity against climate-induced disruptions, the Ministry of Science and Technology has announced a dedicated research grant targeting coastal Sindh. Focus areas include mapping early-warning flood models, engineering heat-resistant crops, and advising smallholders.\n\nLocal research units will deploy sensor arrays along maritime borders of Karachi to capture microclimate anomalies. These data-driven models will enable policymakers to predict and protect against catastrophic events with higher precision.",
+      "excerpt": "The programme supports flood modelling, crop adaptation and community-led resilience planning.",
+      "category": "science",
+      "tags": [
+        "science",
+        "climate",
+        "sindh",
+        "research"
+      ],
+      "featuredImage": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
+      "author": "Dr. Nadia Hussain",
+      "readingTime": "6 min read",
+      "views": 51200,
+      "status": "published",
+      "isFeatured": false,
+      "createdAt": "2026-05-31T17:00:28.079Z"
+    },
+    {
+      "title": "Pakistan Names Asia Cup Squad as Preparations Intensify",
+      "slug": "pakistan-names-asia-cup-quad-as-preparations-intensify",
+      "content": "The National Selection Committee has finalized Pakistan's cricket squad for the upcoming Asia Cup. Selector consultations focused heavily on spin versatility and robust batting choices to counter regional conditions.\n\nBabar Azam remains captain, leading a squad that mixes experienced pacers with rising domestic standouts. Training camps in Abu Dhabi will begin next week under strict coaching supervision to optimize physical conditioning and tactical play.",
+      "excerpt": "The selection balances experience and youth, with a focus on spin depth and middle-order stability.",
+      "category": "sports",
+      "tags": [
+        "sports",
+        "cricket",
+        "pakistan",
+        "asiacup"
+      ],
+      "featuredImage": "https://images.unsplash.com/photo-1531415080290-bc9854593f6f?auto=format&fit=crop&w=800&q=80",
+      "author": "Adeel Raza",
+      "readingTime": "4 min read",
+      "views": 67300,
+      "status": "published",
+      "isFeatured": false,
+      "createdAt": "2026-05-31T15:00:28.079Z"
+    }
+  ],
+  "messages": [
+    {
+      "_id": "msg_1",
+      "name": "Mohammad Hamza",
+      "email": "hamza@example.com",
+      "subject": "Ad rates enquiry",
+      "message": "Could you please share your monthly pricing for newsletter sponsorship and sidebar banners?",
+      "isRead": false,
+      "createdAt": "2026-06-01T11:00:28.571Z"
+    }
+  ],
+  "seo": {
+    "siteTitle": "WORLD NOW | Pakistan's Independent Voice",
+    "siteDescription": "Committed to truth, independent of power, in service of the people of Pakistan. International affairs, economy, analysis, technology and culture stories.",
+    "defaultOgImage": "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=800&q=80",
+    "robotsTxt": "User-agent: *\nAllow: /\nSitemap: /sitemap.xml",
+    "sitemapUrl": "/sitemap.xml"
+  }
+}

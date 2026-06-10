@@ -1,0 +1,6 @@
+{
+  "name": "WORLD NOW",
+  "description": "A professional MERN-based international affairs and news platform with a robust admin CMS, complete responsive visual identity, customizable categories, interactive dashboard, and newspaper aesthetic.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
