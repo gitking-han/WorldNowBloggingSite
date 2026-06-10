@@ -13,7 +13,13 @@ export async function POST(request: Request) {
     const buffer = Buffer.from(await (file as File).arrayBuffer());
     const result = await new Promise<any>((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
-        { folder: 'worldnow', resource_type: 'image' },
+        {
+          folder: 'blog-images',
+          resource_type: 'image',
+          quality: 'auto',
+          fetch_format: 'auto',
+          overwrite: false,
+        },
         (error, uploaded) => {
           if (error) reject(error);
           else resolve(uploaded);

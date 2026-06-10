@@ -7,8 +7,8 @@ import api from '@/utils/api';
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [username, setUsername] = useState('admin');
-  const [password, setPassword] = useState('admin123');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -41,7 +41,7 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-xl rounded-3xl border border-[#d4cbb8] bg-white shadow-xl p-8 md:p-10">
         <p className="text-[10px] uppercase tracking-[0.35em] text-[#b5150e] font-semibold">Admin Access</p>
         <h1 className="mt-4 text-3xl font-serif font-black">Sign in to the WORLD NOW dashboard</h1>
-        <p className="mt-3 text-sm text-gray-600">Use your editorial credentials to manage the newsroom dashboard and review live content.</p>
+        <p className="mt-3 text-sm text-gray-600">Use the credentials configured for this deployment to access the newsroom dashboard. Local development can still use your own admin username and password.</p>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-4">
           <label className="block text-sm font-semibold text-gray-700">

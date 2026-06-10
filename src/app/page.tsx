@@ -11,6 +11,7 @@ import { useSearchParams } from "next/navigation";
 export const dynamic = "force-dynamic";
 
 function HomePageContent() {
+  const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=800&q=80';
   const searchParams = useSearchParams();
   const categoryFilter = searchParams.get("category") || "";
   const regionFilter = searchParams.get("region") || "";
@@ -62,6 +63,15 @@ function HomePageContent() {
 
   const handleClearFilters = () => {
     window.location.href = "/";
+  };
+
+  const handleFeaturedImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const currentTarget = event.currentTarget;
+
+    if (currentTarget.src !== FALLBACK_IMAGE) {
+      currentTarget.onerror = null;
+      currentTarget.src = FALLBACK_IMAGE;
+    }
   };
 
   return (
@@ -126,10 +136,11 @@ function HomePageContent() {
                   <div className="block group">
                     <div className="aspect-[16/9] w-full overflow-hidden rounded relative mb-4 bg-gray-200">
                       <img
-                        src={featuredBlog.featuredImage}
+                        src={featuredBlog.featuredImage || FALLBACK_IMAGE}
                         alt={featuredBlog.title}
                         className="w-full h-full object-cover"
                         loading="lazy"
+                        onError={handleFeaturedImageError}
                       />
                     </div>
                     <a href={`/blog/${featuredBlog.slug}`} className="group">

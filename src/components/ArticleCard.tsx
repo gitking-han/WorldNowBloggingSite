@@ -8,10 +8,21 @@ interface ArticleCardProps {
 }
 
 export default function ArticleCard({ blog }: ArticleCardProps) {
+  const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=800&q=80';
+
   const formatDate = (isoString?: string) => {
     if (!isoString) return '';
     const date = new Date(isoString);
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  };
+
+  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const currentTarget = event.currentTarget;
+
+    if (currentTarget.src !== FALLBACK_IMAGE) {
+      currentTarget.onerror = null;
+      currentTarget.src = FALLBACK_IMAGE;
+    }
   };
 
   return (
@@ -20,10 +31,11 @@ export default function ArticleCard({ blog }: ArticleCardProps) {
         <div>
           <div className="w-full aspect-[3/2] overflow-hidden rounded mb-3 relative bg-[#e8e0d0]">
             <img
-              src={blog.featuredImage || 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=800&q=80'}
+              src={blog.featuredImage || FALLBACK_IMAGE}
               alt={blog.title}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               loading="lazy"
+              onError={handleImageError}
             />
             <div className="absolute bottom-3 left-3 flex flex-col gap-1">
               <span className="bg-[#0d0d0d]/80 text-white font-sans text-[9px] uppercase tracking-widest px-2 py-0.5 rounded block">

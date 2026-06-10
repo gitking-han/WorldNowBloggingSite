@@ -13,6 +13,7 @@ import ArticleCard from '@/components/ArticleCard';
 export const dynamic = 'force-dynamic';
 
 export default function BlogDetail() {
+  const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=800&q=80';
   const params = useParams();
   const router = useRouter();
   const slug = params.slug as string;
@@ -26,6 +27,15 @@ export default function BlogDetail() {
   const [loading, setLoading] = useState(true);
 
   const renderedContent = useMemo(() => renderMarkdown(blog?.content || ''), [blog?.content]);
+
+  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const currentTarget = event.currentTarget;
+
+    if (currentTarget.src !== FALLBACK_IMAGE) {
+      currentTarget.onerror = null;
+      currentTarget.src = FALLBACK_IMAGE;
+    }
+  };
 
   usePageMetadata({
     title: blog?.seoTitle || blog?.title || 'Blog Post',
@@ -162,9 +172,10 @@ export default function BlogDetail() {
           {blog.featuredImage && (
             <div className="mb-8 rounded overflow-hidden">
               <img
-                src={blog.featuredImage}
+                src={blog.featuredImage || FALLBACK_IMAGE}
                 alt={blog.title}
                 className="w-full h-full object-cover"
+                onError={handleImageError}
               />
             </div>
           )}
