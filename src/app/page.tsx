@@ -1,253 +1,217 @@
-"use client";
+'use client';
 
-import React, { Suspense, useEffect, useState } from "react";
-import { Loader2, HelpCircle, Globe } from "lucide-react";
-import api from "@/utils/api";
-import { usePageMetadata } from "@/utils/seo";
-import { Blog } from "@/types";
-import ArticleCard from "@/components/ArticleCard";
-import { useSearchParams } from "next/navigation";
+import React, { useEffect, useMemo, useState } from 'react';
+import Link from 'next/link';
+import { Globe, Loader2, TrendingUp } from 'lucide-react';
+import api from '@/utils/api';
+import { usePageMetadata } from '@/utils/seo';
+import { Blog } from '@/types';
+import ArticleCard from '@/components/ArticleCard';
 
-export const dynamic = "force-dynamic";
-
-function HomePageContent() {
-  const searchParams = useSearchParams();
-  const categoryFilter = searchParams.get("category") || "";
-  const regionFilter = searchParams.get("region") || "";
-  const searchFilter = searchParams.get("search") || "";
-
+export default function HomeLandingPage() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
 
   const appUrl =
-    typeof window !== "undefined"
+    typeof window !== 'undefined'
       ? window.location.origin
-      : "https://worldnow.news";
+      : 'https://worldnow.news';
 
   usePageMetadata({
-    title: "WORLD NOW | Pakistan and World News",
+    title: 'WORLD NOW | Pakistan and World News',
     description:
-      "Read the latest independent news and analysis from Pakistan and around the world. WORLD NOW publishes trusted stories on politics, economy, technology, and culture.",
+      'Read the latest independent news, analysis, and updates from Pakistan and around the world.',
     url: `${appUrl}/`,
-    type: "website",
-    image: "/browserlogo.png",
+    type: 'website',
+    image: '/browserlogo.png',
   });
 
   useEffect(() => {
-    async function fetchBlogs() {
+    const fetchBlogs = async () => {
       try {
         setLoading(true);
-        const params: Record<string, string> = {
-          status: "published",
-          limit: "24",
-        };
-        if (categoryFilter) params.category = categoryFilter;
-        if (regionFilter) params.region = regionFilter;
-        if (searchFilter) params.search = searchFilter;
-
-        const res = await api.get("/blogs", { params });
-        const blogsData = Array.isArray(res.data) ? res.data : [];
-        setBlogs(blogsData);
-      } catch (err) {
-        console.error("Failed fetching blogs list: ", err);
+        const res = await api.get('/blogs', { params: { status: 'published', limit: '18' } });
+        setBlogs(Array.isArray(res.data) ? res.data : []);
+      } catch (error) {
+        console.error('Failed to load homepage data:', error);
         setBlogs([]);
       } finally {
         setLoading(false);
       }
-    }
+    };
+
     fetchBlogs();
-  }, [categoryFilter, regionFilter, searchFilter]);
+  }, []);
 
-  const featuredBlog = blogs.find((b) => b.isFeatured) || blogs[0];
-  const latestArticles = blogs.filter((b) => b._id !== featuredBlog?._id);
-  const sideArticles = latestArticles.slice(0, 5);
-  const gridArticles = latestArticles.slice(0, 14);
-
-  const handleClearFilters = () => {
-    window.location.href = "/";
-  };
+  const featuredBlog = blogs.find((blog) => blog.isFeatured) || blogs[0];
+  const recentArticles = blogs.slice(0, 9);
+  const mostViewedArticles = useMemo(
+    () =>
+      [...blogs]
+        .sort((left, right) => (Number(right.views) || 0) - (Number(left.views) || 0))
+        .slice(0, 6),
+    [blogs],
+  );
 
   return (
-    <div className="w-full bg-[#faf8f4] text-[#0d0d0d] font-sans pb-16">
-      {(categoryFilter || regionFilter || searchFilter) && (
-        <div className="w-full bg-white border-b border-[#d4cbb8] py-4 px-8">
-          <div className="max-w-7xl mx-auto flex items-center justify-between">
-            <span className="text-xs uppercase font-bold tracking-widest text-[#b5150e]">
-              Filtered Archive{" "}
-              {categoryFilter && `· Category: ${categoryFilter}`}
-              {regionFilter && `· Region: ${regionFilter}`}
-              {searchFilter && `· Query: "${searchFilter}"`}
-            </span>
-            <button
-              onClick={handleClearFilters}
-              className="text-xs text-gray-500 hover:text-black transition"
-            >
-              Clear All Filters ×
-            </button>
+    <main className="min-h-screen bg-[#faf8f4] text-[#0d0d0d]">
+      <section className="border-b border-[#e8e0d0] bg-white/90 backdrop-blur-sm">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-10 md:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:py-14">
+          <div className="space-y-6">
+            <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#b5150e]">
+              WORLD NOW · Independent newsroom
+            </p>
+            <h1 className="max-w-xl font-serif text-4xl font-black leading-tight text-[#0d0d0d] md:text-5xl lg:text-6xl">
+              A cleaner homepage for fast, trusted updates from Pakistan and the world.
+            </h1>
+            <p className="max-w-2xl text-base text-gray-700 md:text-lg">
+              Follow the latest politics, business, culture, and regional reports in one structured page designed for readers and publisher tools.
+            </p>
+
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href="/archive"
+                className="rounded-full bg-[#b5150e] px-5 py-3 text-xs font-semibold uppercase tracking-[0.25em] text-white transition hover:bg-[#8a0f09]"
+              >
+                Browse latest stories
+              </Link>
+              <Link
+                href="/about"
+                className="rounded-full border border-[#d4cbb8] bg-white px-5 py-3 text-xs font-semibold uppercase tracking-[0.25em] text-[#0d0d0d] transition hover:border-[#b5150e] hover:text-[#b5150e]"
+              >
+                Learn about us
+              </Link>
+            </div>
+
+            <div className="grid gap-3 border-t border-[#e8e0d0] pt-5 text-sm text-gray-700 sm:grid-cols-3">
+              <div className="rounded-2xl border border-[#e8e0d0] bg-[#fffdfa] p-4 shadow-sm">
+                <p className="text-[10px] uppercase tracking-[0.35em] text-[#b5150e]">Coverage</p>
+                <p className="mt-2 text-xl font-black text-[#0d0d0d]">Pakistan + world</p>
+              </div>
+              <div className="rounded-2xl border border-[#e8e0d0] bg-[#fffdfa] p-4 shadow-sm">
+                <p className="text-[10px] uppercase tracking-[0.35em] text-[#b5150e]">Editor focus</p>
+                <p className="mt-2 text-xl font-black text-[#0d0d0d]">Verified reports</p>
+              </div>
+              <div className="rounded-2xl border border-[#e8e0d0] bg-[#fffdfa] p-4 shadow-sm">
+                <p className="text-[10px] uppercase tracking-[0.35em] text-[#b5150e]">Reader value</p>
+                <p className="mt-2 text-xl font-black text-[#0d0d0d]">Clean navigation</p>
+              </div>
+            </div>
           </div>
-        </div>
-      )}
 
-      {loading ? (
-        <div className="max-w-7xl mx-auto py-24 flex flex-col justify-center items-center gap-4">
-          <Loader2 className="w-10 h-10 text-[#b5150e] animate-spin" />
-          <span className="font-serif text-sm italic text-gray-600">
-            Retrieving broadsheet wires from Lahore...
-          </span>
-        </div>
-      ) : blogs.length === 0 ? (
-        <div className="max-w-4xl mx-auto py-16 px-4 text-center">
-          <HelpCircle className="w-12 h-12 text-[#b5150e] mx-auto mb-4" />
-          <h2 className="font-serif text-2xl font-bold mb-2">
-            No Articles Found
-          </h2>
-          <p className="text-xs text-gray-600 mb-6">
-            Our correspondents have not published articles matching these
-            parameters yet.
-          </p>
-          <button
-            onClick={handleClearFilters}
-            className="px-6 py-2.5 bg-[#b5150e] text-white text-xs uppercase tracking-wider font-semibold hover:bg-[#8a0f09] transition rounded"
-          >
-            View All News Stories
-          </button>
-        </div>
-      ) : (
-        <div className="max-w-7xl mx-auto px-4 md:px-8 pt-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-12 border-b border-[#d4cbb8]">
-
-            {/* ── Featured Blog ── */}
-            {featuredBlog && (
-              <div className="lg:col-span-2 border-r-0 lg:border-r border-[#d4cbb8] lg:pr-8 flex flex-col justify-between">
-                <div>
-                  <span className="font-sans text-[10px] font-bold text-[#b5150e] uppercase tracking-[0.2em] mb-3 block">
-                    {Array.isArray(featuredBlog.categories)
-                      ? featuredBlog.categories
-                          .filter((c: string) => c !== "asia")
-                          .join(", ") || featuredBlog.category
-                      : featuredBlog.category}{" "}
-                    · Broadsheet Focus
-                  </span>
-
-                  <a href={`/blog/${featuredBlog.slug}`} className="block group">
-                    <div className="aspect-[16/9] w-full overflow-hidden rounded relative mb-4 bg-gray-200">
-                      <img
-                        src={featuredBlog.featuredImage}
-                        alt={featuredBlog.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        loading="lazy"
-                      />
-                    </div>
-                    <h2 className="font-serif text-3xl sm:text-4xl font-extrabold leading-tight text-[#0d0d0d] mb-3 group-hover:text-[#b5150e] transition">
-                      {featuredBlog.title}
-                    </h2>
-                  </a>
-
-                  <p className="font-serif text-gray-700 text-sm leading-relaxed mb-4 font-light">
-                    {featuredBlog.excerpt}
-                  </p>
+          <div className="rounded-3xl border border-[#e8e0d0] bg-white p-5 shadow-sm">
+            {featuredBlog ? (
+              <>
+                <div className="mb-4 flex items-center justify-between text-[10px] uppercase tracking-[0.35em] text-[#b5150e]">
+                  <span>Featured story</span>
+                  <span>Home page spotlight</span>
                 </div>
-
-                <div className="flex items-center gap-4 py-3 border-t border-[#e8e0d0] text-xs font-sans text-gray-500">
-                  <strong className="text-gray-900">
-                    By {featuredBlog.author}
-                  </strong>
-                  <span>·</span>
-                  <span>
-                    {new Date(featuredBlog.createdAt).toLocaleDateString(
-                      "en-US",
-                      { month: "short", day: "numeric", year: "numeric" },
-                    )}
-                  </span>
-                  <span>·</span>
-                  <span className="text-[#b5150e] uppercase text-[10px] font-bold tracking-wider">
+                <Link href={`/blog/${featuredBlog.slug}`} className="group block overflow-hidden rounded-2xl border border-[#e8e0d0] bg-[#f8f4ee]">
+                  <img
+                    src={featuredBlog.featuredImage}
+                    alt={featuredBlog.title}
+                    className="h-56 w-full object-cover transition duration-500 group-hover:scale-105"
+                  />
+                </Link>
+                <div className="mt-4 space-y-3">
+                  <p className="text-[10px] uppercase tracking-[0.35em] text-[#b5150e]">
                     {Array.isArray(featuredBlog.categories)
-                      ? featuredBlog.categories[0]
+                      ? featuredBlog.categories.join(', ')
                       : featuredBlog.category}
-                  </span>
+                  </p>
+                  <Link href={`/blog/${featuredBlog.slug}`} className="block text-2xl font-black font-serif leading-tight text-[#0d0d0d] transition hover:text-[#b5150e]">
+                    {featuredBlog.title}
+                  </Link>
+                  <p className="text-sm text-gray-700">{featuredBlog.excerpt}</p>
                 </div>
+              </>
+            ) : (
+              <div className="rounded-2xl border border-dashed border-[#d4cbb8] bg-[#faf8f4] p-6 text-sm text-gray-600">
+                No featured story is available right now.
               </div>
             )}
-
-            {/* ── Side Articles ── */}
-            <div className="lg:col-span-1 flex flex-col gap-6">
-              <h3 className="font-serif text-[11px] font-extrabold text-[#555] uppercase tracking-[0.22em] border-b border-[#d4cbb8] pb-2 flex items-center gap-1.5">
-                <Globe className="w-3.5 h-3.5 text-[#b5150e]" />
-                <span>Immediate Wire Reports</span>
-              </h3>
-              <div className="flex flex-col gap-0">
-                {sideArticles.map((art: Blog, index: number) => (
-                  <a
-                    key={art._id}
-                    href={`/blog/${art.slug}`}
-                    className={`block group pt-4 border-t border-[#e8e0d0] hover:bg-[#faf8f4] transition-colors px-1 rounded ${
-                      index === 0 ? "pt-0 border-t-0" : ""
-                    }`}
-                  >
-                    <span className="inline-block px-1.5 py-0.5 bg-gray-100 rounded text-[9px] uppercase tracking-wider text-[#b5150e] font-sans font-bold mb-1.5">
-                      {Array.isArray(art.categories)
-                        ? art.categories
-                            .filter((c: string) => c !== "asia")
-                            .join(", ") || art.category
-                        : art.category}
-                    </span>
-                    <h4 className="font-serif font-bold text-[15px] leading-snug group-hover:text-[#b5150e] text-[#0d0d0d] mb-1.5 transition-colors">
-                      {art.title}
-                    </h4>
-                    <p className="text-[11px] text-gray-500 font-serif leading-relaxed line-clamp-2 mb-3">
-                      {art.excerpt}
-                    </p>
-                  </a>
-                ))}
-              </div>
-            </div>
           </div>
+        </div>
+      </section>
 
-          {/* ── Ad Placeholder ── */}
-          <div className="w-full my-12 bg-white border border-[#e8e0d0] p-4 text-center select-none rounded">
-            <span className="text-[9px] uppercase tracking-widest text-gray-400 font-sans block mb-2">
-              Advertisement
-            </span>
-            <div className="w-full min-h-[90px] flex items-center justify-center bg-[#faf8f4] border border-dashed border-gray-200">
-              <span className="text-xs italic text-gray-400">
-                Section hero ad placeholder
-              </span>
-            </div>
+      <section className="mx-auto max-w-7xl px-4 py-10 md:px-8">
+        <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.35em] text-[#b5150e] font-bold">Recent articles</p>
+            <h2 className="mt-2 font-serif text-2xl font-black text-[#0d0d0d] md:text-3xl">Latest reports from the newsroom</h2>
           </div>
+          <Link href="/archive" className="text-xs uppercase tracking-[0.25em] text-[#b5150e] hover:text-[#8a0f09] font-semibold">
+            View all updates →
+          </Link>
+        </div>
 
-          {/* ── Grid Articles ── */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {gridArticles.map((article: Blog) => (
+        {loading ? (
+          <div className="flex min-h-[180px] items-center justify-center rounded-3xl border border-[#e8e0d0] bg-white shadow-sm">
+            <Loader2 className="h-8 w-8 animate-spin text-[#b5150e]" />
+          </div>
+        ) : (
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {recentArticles.map((article) => (
               <ArticleCard key={article._id} blog={article} />
             ))}
           </div>
+        )}
+      </section>
 
-          <div className="mt-12 rounded-3xl border border-[#e8e0d0] bg-white p-6 text-sm text-gray-700 shadow-sm">
-            <h3 className="font-serif text-xl font-bold text-[#0d0d0d]">
-              Editorial note
-            </h3>
-            <p className="mt-3 max-w-3xl text-gray-600">
-              Browse the latest reports, local desks, and analysis from WORLD
-              NOW — all the live newsroom content is now available in the public
-              feed.
-            </p>
+      <section className="mx-auto grid max-w-7xl gap-8 px-4 pb-14 md:px-8 lg:grid-cols-[0.95fr_1.05fr]">
+        <article className="rounded-3xl border border-[#e8e0d0] bg-white p-6 shadow-sm">
+          <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.35em] text-[#b5150e] font-bold">
+            <Globe className="h-3.5 w-3.5" />
+            <span>Why this homepage works</span>
           </div>
-        </div>
-      )}
-    </div>
-  );
-}
+          <h3 className="mt-4 font-serif text-2xl font-black text-[#0d0d0d]">A stronger publisher-first landing page</h3>
+          <p className="mt-3 text-sm text-gray-700 leading-relaxed">
+            The new homepage gives readers a clearer starting point, highlights the latest coverage, and keeps the archive-style category feed available for deep browsing. This improves readability, trust, and the overall site structure that publishers value.
+          </p>
+          <div className="mt-5 rounded-2xl border border-dashed border-[#d4cbb8] bg-[#faf8f4] p-4 text-center text-xs uppercase tracking-[0.25em] text-gray-500">
+            AdSense-friendly placement area
+          </div>
+        </article>
 
-export default function Home() {
-  return (
-    <Suspense
-      fallback={
-        <div className="min-h-[40vh] flex items-center justify-center text-sm text-gray-500">
-          Loading newsroom feed…
-        </div>
-      }
-    >
-      <HomePageContent />
-    </Suspense>
+        <article className="rounded-3xl border border-[#e8e0d0] bg-white p-6 shadow-sm">
+          <div className="mb-5 flex items-center justify-between gap-3">
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.35em] text-[#b5150e] font-bold">Most viewed</p>
+              <h3 className="mt-2 font-serif text-2xl font-black text-[#0d0d0d]">Popular stories this week</h3>
+            </div>
+            <TrendingUp className="h-4 w-4 text-[#b5150e]" />
+          </div>
+
+          <div className="space-y-4">
+            {mostViewedArticles.length > 0 ? (
+              mostViewedArticles.map((article, index) => (
+                <Link
+                  key={article._id}
+                  href={`/blog/${article.slug}`}
+                  className="group flex gap-4 rounded-2xl border border-[#e8e0d0] bg-[#fffdfa] p-4 transition hover:border-[#b5150e]/40 hover:bg-white"
+                >
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#0d0d0d] text-xs font-black text-white">0{index + 1}</span>
+                  <div className="min-w-0">
+                    <p className="text-[10px] uppercase tracking-[0.25em] text-[#b5150e] font-semibold">
+                      {Array.isArray(article.categories)
+                        ? article.categories.join(', ')
+                        : article.category}
+                    </p>
+                    <h4 className="mt-1 font-serif text-lg font-black leading-tight text-[#0d0d0d] group-hover:text-[#b5150e] transition">
+                      {article.title}
+                    </h4>
+                    <p className="mt-2 text-xs text-gray-500">{Number(article.views) || 0} views</p>
+                  </div>
+                </Link>
+              ))
+            ) : (
+              <div className="rounded-2xl border border-dashed border-[#d4cbb8] bg-[#faf8f4] p-5 text-sm text-gray-600">
+                Popular article data will appear here as readers engage with the site.
+              </div>
+            )}
+          </div>
+        </article>
+      </section>
+    </main>
   );
 }

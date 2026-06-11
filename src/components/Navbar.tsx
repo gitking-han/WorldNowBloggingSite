@@ -59,7 +59,7 @@ export default function Navbar({ categories, regions }: NavbarProps) {
         <ul className="list-none flex flex-col md:flex-row md:flex-wrap items-stretch gap-0 w-full m-0 p-0">
           <li>
             <Link
-              href="/home"
+              href="/"
               className={`inline-flex items-center px-5 py-4 text-[12.5px] font-medium tracking-widest uppercase border-b md:border-b-0 md:border-r border-[#1a1a1a] transition ${
                 isRouteActive('') ? 'bg-[#b5150e] text-white' : 'text-gray-300 hover:bg-[#b5150e] hover:text-white'
               }`}
@@ -71,7 +71,7 @@ export default function Navbar({ categories, regions }: NavbarProps) {
           {Array.isArray(categories) && categories.map((cat) => (
             <li key={cat.slug}>
               <Link
-                href={`/?category=${cat.slug}`}
+                href={`/archive?category=${cat.slug}`}
                 className={`inline-flex items-center px-5 py-4 text-[12.5px] font-medium tracking-widest uppercase border-b md:border-b-0 md:border-r border-[#1a1a1a] transition ${
                   isRouteActive(cat.slug) ? 'bg-[#b5150e] text-white' : 'text-gray-300 hover:bg-[#b5150e] hover:text-white'
                 }`}
@@ -94,7 +94,7 @@ export default function Navbar({ categories, regions }: NavbarProps) {
                 {regionItems.map((region) => (
                   <Link
                     key={region.slug}
-                    href={`/?region=${encodeURIComponent(region.slug)}`}
+                    href={`/archive?region=${encodeURIComponent(region.slug)}`}
                     className={`block px-4 py-2 text-xs transition ${searchParams.get('region') === region.slug ? 'bg-[#b5150e] text-white' : 'text-gray-300 hover:bg-neutral-800 hover:text-white'}`}
                     onClick={() => setRegionsOpen(false)}
                   >

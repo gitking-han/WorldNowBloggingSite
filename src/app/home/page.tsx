@@ -159,19 +159,7 @@ export default function HomeLandingPage() {
       </section>
 
       <section className="mx-auto grid max-w-7xl gap-8 px-4 pb-14 md:px-8 lg:grid-cols-[0.95fr_1.05fr]">
-        <article className="rounded-3xl border border-[#e8e0d0] bg-white p-6 shadow-sm">
-          <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.35em] text-[#b5150e] font-bold">
-            <Globe className="h-3.5 w-3.5" />
-            <span>Why this homepage works</span>
-          </div>
-          <h3 className="mt-4 font-serif text-2xl font-black text-[#0d0d0d]">A stronger publisher-first landing page</h3>
-          <p className="mt-3 text-sm text-gray-700 leading-relaxed">
-            The new homepage gives readers a clearer starting point, highlights the latest coverage, and keeps the archive-style category feed available for deep browsing. This improves readability, trust, and the overall site structure that publishers value.
-          </p>
-          <div className="mt-5 rounded-2xl border border-dashed border-[#d4cbb8] bg-[#faf8f4] p-4 text-center text-xs uppercase tracking-[0.25em] text-gray-500">
-            AdSense-friendly placement area
-          </div>
-        </article>
+      
 
         <article className="rounded-3xl border border-[#e8e0d0] bg-white p-6 shadow-sm">
           <div className="mb-5 flex items-center justify-between gap-3">
