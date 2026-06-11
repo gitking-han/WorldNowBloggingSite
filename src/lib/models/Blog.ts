@@ -21,4 +21,9 @@ const BlogSchema = new mongoose.Schema({
   isFeatured: { type: Boolean, default: false }
 }, { timestamps: true });
 
+BlogSchema.index({ status: 1, createdAt: -1 });
+BlogSchema.index({ category: 1, status: 1, createdAt: -1 });
+BlogSchema.index({ location: 1, status: 1 });
+BlogSchema.index({ slug: 1, status: 1 });
+
 export default mongoose.models.Blog || mongoose.model('Blog', BlogSchema);

@@ -36,44 +36,57 @@ export async function GET(request: Request) {
     const region = searchParams.get('region');
     const search = searchParams.get('search');
     const status = searchParams.get('status') || 'published';
+    const rawLimit = Number(searchParams.get('limit') || '24');
+    const limit = Number.isFinite(rawLimit) ? Math.min(Math.max(rawLimit, 1), 60) : 24;
 
     await connectToDatabase();
 
     const filters: any[] = [{ status }];
 
     if (category) {
+      const categoryRegex = new RegExp(`^${category.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i');
       filters.push({
         $or: [
-          { categories: category },
-          { category: category }
+          { categories: categoryRegex },
+          { category: categoryRegex }
         ]
       });
     }
 
     if (region) {
+      const regionRegex = new RegExp(`^${region.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i');
       filters.push({
         $or: [
-          { region: region },
-          { location: region }
+          { region: regionRegex },
+          { location: regionRegex }
+        ]
+      });
+    }
+
+    if (search) {
+      const searchRegex = new RegExp(search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+      filters.push({
+        $or: [
+          { title: searchRegex },
+          { content: searchRegex },
+          { excerpt: searchRegex },
+          { location: searchRegex }
         ]
       });
     }
 
     const query = filters.length > 1 ? { $and: filters } : filters[0];
 
-    let blogs = await Blog.find(query).sort({ createdAt: -1 });
+    const blogs = await Blog.find(query)
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .lean();
 
-    if (search) {
-      const q = search.toLowerCase();
-      blogs = blogs.filter((b: any) =>
-        b.title.toLowerCase().includes(q) ||
-        b.content.toLowerCase().includes(q) ||
-        b.excerpt.toLowerCase().includes(q) ||
-        (b.location && b.location.toLowerCase().includes(q))
-      );
-    }
-
-    return Response.json(blogs);
+    return Response.json(blogs, {
+      headers: {
+        'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+      },
+    });
   } catch (error: any) {
     const seedData = getSeedData();
     if (seedData?.blogs) {
@@ -82,8 +95,16 @@ export async function GET(request: Request) {
       const region = searchParams.get('region');
       const search = searchParams.get('search');
       const status = searchParams.get('status') || 'published';
+      const rawLimit = Number(searchParams.get('limit') || '24');
+      const limit = Number.isFinite(rawLimit) ? Math.min(Math.max(rawLimit, 1), 60) : 24;
 
-      return Response.json(filterBlogs(seedData.blogs, category, search, status, region), { status: 200 });
+      const fallbackBlogs = filterBlogs(seedData.blogs, category, search, status, region).slice(0, limit);
+      return Response.json(fallbackBlogs, {
+        status: 200,
+        headers: {
+          'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+        },
+      });
     }
 
     return Response.json({ error: error.message || 'Failed to load blog posts.' }, { status: 500 });

@@ -37,7 +37,10 @@ function HomePageContent() {
     async function fetchBlogs() {
       try {
         setLoading(true);
-        const params: Record<string, string> = { status: "published" };
+        const params: Record<string, string> = {
+          status: "published",
+          limit: "24",
+        };
         if (categoryFilter) params.category = categoryFilter;
         if (regionFilter) params.region = regionFilter;
         if (searchFilter) params.search = searchFilter;

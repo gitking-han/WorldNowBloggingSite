@@ -6,7 +6,12 @@ export async function GET(request: Request, { params }: { params: { slug: string
     await connectToDatabase();
     const slug = params.slug;
 
-    const blog = await Blog.findOne({ slug });
+    const blog = await Blog.findOneAndUpdate(
+      { slug },
+      { $inc: { views: 1 } },
+      { new: true, lean: true }
+    );
+
     if (!blog) {
       const seedData = getSeedData();
       const fallbackBlog = Array.isArray(seedData?.blogs)
@@ -14,16 +19,22 @@ export async function GET(request: Request, { params }: { params: { slug: string
         : null;
 
       if (fallbackBlog) {
-        return Response.json(fallbackBlog, { status: 200 });
+        return Response.json(fallbackBlog, {
+          status: 200,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        });
       }
 
       return Response.json({ error: 'Article not found' }, { status: 404 });
     }
 
-    await Blog.findByIdAndUpdate(blog._id, { $inc: { views: 1 } });
-
-    const updated = await Blog.findById(blog._id);
-    return Response.json(updated);
+    return Response.json(blog, {
+      headers: {
+        'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+      },
+    });
   } catch (error: any) {
     return Response.json({ error: error.message }, { status: 500 });
   }

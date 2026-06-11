@@ -47,7 +47,7 @@ export default function BlogDetail() {
 
         if (res.data.category) {
           const relatedRes = await api.get('/blogs', {
-            params: { category: res.data.category, status: 'published' }
+            params: { category: res.data.category, status: 'published', limit: 3 }
           });
           const filtered = (relatedRes.data || []).filter((b: Blog) => b._id !== res.data._id).slice(0, 3);
           setRelatedBlogs(filtered);
