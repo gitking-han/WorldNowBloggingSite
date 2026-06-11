@@ -47,7 +47,7 @@ export default function Navbar({ categories, regions }: NavbarProps) {
         <span className="font-semibold text-xs tracking-wider uppercase text-gray-300">Sections Menu</span>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="text-white focus:outline-none"
+          className="text-white bg-[#111] hover:bg-[#b5150e] border-none focus:outline-none"
           aria-expanded={isOpen}
           aria-label="Toggle Navigation"
         >
