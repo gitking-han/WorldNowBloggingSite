@@ -15,8 +15,11 @@ export default function ArticleCard({ blog }: ArticleCardProps) {
   };
 
   return (
-    <div className="group flex flex-col h-full cursor-pointer bg-white border border-[#e8e0d0] hover:border-[#b5150e]/30 pointer-events-auto shadow-sm hover:shadow-md transition-all duration-300 p-4 rounded-md">
-      <Link href={`/blog/${blog.slug}`} className="flex flex-col h-full justify-between">
+    <Link
+      href={`/blog/${blog.slug}`}
+      className="group flex flex-col h-full bg-white border border-[#e8e0d0] hover:border-[#b5150e]/30 shadow-sm hover:shadow-md transition-all duration-300 p-4 rounded-md"
+    >
+      <div className="flex flex-col h-full justify-between">
         <div>
           <div className="w-full aspect-[3/2] overflow-hidden rounded mb-3 relative bg-[#e8e0d0]">
             <img
@@ -58,7 +61,7 @@ export default function ArticleCard({ blog }: ArticleCardProps) {
           <span>By {blog.author}</span>
           <span>{formatDate(blog.createdAt)}</span>
         </div>
-      </Link>
-    </div>
+      </div>
+    </Link>
   );
 }

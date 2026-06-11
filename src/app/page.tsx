@@ -4,7 +4,7 @@ import React, { Suspense, useEffect, useState } from "react";
 import { Loader2, HelpCircle, Globe } from "lucide-react";
 import api from "@/utils/api";
 import { usePageMetadata } from "@/utils/seo";
-import { Blog, Category } from "@/types";
+import { Blog } from "@/types";
 import ArticleCard from "@/components/ArticleCard";
 import { useSearchParams } from "next/navigation";
 
@@ -23,13 +23,13 @@ function HomePageContent() {
     typeof window !== "undefined"
       ? window.location.origin
       : "https://worldnow.news";
+
   usePageMetadata({
     title: "WORLD NOW | Pakistan and World News",
     description:
       "Read the latest independent news and analysis from Pakistan and around the world. WORLD NOW publishes trusted stories on politics, economy, technology, and culture.",
     url: `${appUrl}/`,
     type: "website",
-
     image: "/browserlogo.png",
   });
 
@@ -37,7 +37,7 @@ function HomePageContent() {
     async function fetchBlogs() {
       try {
         setLoading(true);
-        const params: any = { status: "published" };
+        const params: Record<string, string> = { status: "published" };
         if (categoryFilter) params.category = categoryFilter;
         if (regionFilter) params.region = regionFilter;
         if (searchFilter) params.search = searchFilter;
@@ -112,36 +112,39 @@ function HomePageContent() {
       ) : (
         <div className="max-w-7xl mx-auto px-4 md:px-8 pt-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-12 border-b border-[#d4cbb8]">
+
+            {/* ── Featured Blog ── */}
             {featuredBlog && (
               <div className="lg:col-span-2 border-r-0 lg:border-r border-[#d4cbb8] lg:pr-8 flex flex-col justify-between">
                 <div>
                   <span className="font-sans text-[10px] font-bold text-[#b5150e] uppercase tracking-[0.2em] mb-3 block">
                     {Array.isArray(featuredBlog.categories)
                       ? featuredBlog.categories
-                          .filter((c) => c !== "asia")
+                          .filter((c: string) => c !== "asia")
                           .join(", ") || featuredBlog.category
                       : featuredBlog.category}{" "}
                     · Broadsheet Focus
                   </span>
-                  <div className="block group">
+
+                  <a href={`/blog/${featuredBlog.slug}`} className="block group">
                     <div className="aspect-[16/9] w-full overflow-hidden rounded relative mb-4 bg-gray-200">
                       <img
                         src={featuredBlog.featuredImage}
                         alt={featuredBlog.title}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy"
                       />
                     </div>
-                    <a href={`/blog/${featuredBlog.slug}`} className="group">
-                      <h2 className="font-serif text-3xl sm:text-4xl font-extrabold leading-tight text-[#0d0d0d] mb-3 group-hover:text-[#b5150e] transition">
-                        {featuredBlog.title}
-                      </h2>
-                    </a>
-                  </div>
+                    <h2 className="font-serif text-3xl sm:text-4xl font-extrabold leading-tight text-[#0d0d0d] mb-3 group-hover:text-[#b5150e] transition">
+                      {featuredBlog.title}
+                    </h2>
+                  </a>
+
                   <p className="font-serif text-gray-700 text-sm leading-relaxed mb-4 font-light">
                     {featuredBlog.excerpt}
                   </p>
                 </div>
+
                 <div className="flex items-center gap-4 py-3 border-t border-[#e8e0d0] text-xs font-sans text-gray-500">
                   <strong className="text-gray-900">
                     By {featuredBlog.author}
@@ -163,38 +166,41 @@ function HomePageContent() {
               </div>
             )}
 
+            {/* ── Side Articles ── */}
             <div className="lg:col-span-1 flex flex-col gap-6">
               <h3 className="font-serif text-[11px] font-extrabold text-[#555] uppercase tracking-[0.22em] border-b border-[#d4cbb8] pb-2 flex items-center gap-1.5">
                 <Globe className="w-3.5 h-3.5 text-[#b5150e]" />
                 <span>Immediate Wire Reports</span>
               </h3>
-              <div className="flex flex-col gap-4 divide-y divide-[#e8e0d0]">
-                {sideArticles.map((art, index) => (
-                  <div
+              <div className="flex flex-col gap-0">
+                {sideArticles.map((art: Blog, index: number) => (
+                  <a
                     key={art._id}
-                    className={`pt-4 ${index === 0 ? "pt-0" : ""}`}
+                    href={`/blog/${art.slug}`}
+                    className={`block group pt-4 border-t border-[#e8e0d0] hover:bg-[#faf8f4] transition-colors px-1 rounded ${
+                      index === 0 ? "pt-0 border-t-0" : ""
+                    }`}
                   >
                     <span className="inline-block px-1.5 py-0.5 bg-gray-100 rounded text-[9px] uppercase tracking-wider text-[#b5150e] font-sans font-bold mb-1.5">
                       {Array.isArray(art.categories)
                         ? art.categories
-                            .filter((c) => c !== "asia")
+                            .filter((c: string) => c !== "asia")
                             .join(", ") || art.category
                         : art.category}
                     </span>
-                    <a href={`/blog/${art.slug}`} className="block group">
-                      <h4 className="font-serif font-bold text-[15px] leading-snug group-hover:text-[#b5150e] text-[#0d0d0d] mb-1.5 transition-colors">
-                        {art.title}
-                      </h4>
-                    </a>
-                    <p className="text-[11px] text-gray-500 font-serif leading-relaxed line-clamp-2">
+                    <h4 className="font-serif font-bold text-[15px] leading-snug group-hover:text-[#b5150e] text-[#0d0d0d] mb-1.5 transition-colors">
+                      {art.title}
+                    </h4>
+                    <p className="text-[11px] text-gray-500 font-serif leading-relaxed line-clamp-2 mb-3">
                       {art.excerpt}
                     </p>
-                  </div>
+                  </a>
                 ))}
               </div>
             </div>
           </div>
 
+          {/* ── Ad Placeholder ── */}
           <div className="w-full my-12 bg-white border border-[#e8e0d0] p-4 text-center select-none rounded">
             <span className="text-[9px] uppercase tracking-widest text-gray-400 font-sans block mb-2">
               Advertisement
@@ -206,8 +212,9 @@ function HomePageContent() {
             </div>
           </div>
 
+          {/* ── Grid Articles ── */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {gridArticles.map((article) => (
+            {gridArticles.map((article: Blog) => (
               <ArticleCard key={article._id} blog={article} />
             ))}
           </div>

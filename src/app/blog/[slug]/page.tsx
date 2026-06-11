@@ -31,7 +31,7 @@ export default function BlogDetail() {
     title: blog?.seoTitle || blog?.title || 'Blog Post',
     description: blog?.metaDescription || blog?.excerpt || '',
     url: `${typeof window !== 'undefined' ? window.location.origin : 'https://worldnow.news'}/blog/${slug}`,
-    image: blog?.ogImage || blog?.featuredImage,
+    image: "/browserlogo.png",
     type: 'article',
   });
 
