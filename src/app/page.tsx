@@ -1,39 +1,41 @@
-'use client';
+"use client";
 
-import React, { useEffect, useMemo, useState } from 'react';
-import Link from 'next/link';
-import { Globe, Loader2, TrendingUp } from 'lucide-react';
-import api from '@/utils/api';
-import { usePageMetadata } from '@/utils/seo';
-import { Blog } from '@/types';
-import ArticleCard from '@/components/ArticleCard';
+import React, { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import { Globe, Loader2, TrendingUp } from "lucide-react";
+import api from "@/utils/api";
+import { usePageMetadata } from "@/utils/seo";
+import { Blog } from "@/types";
+import ArticleCard from "@/components/ArticleCard";
 
 export default function HomeLandingPage() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
 
   const appUrl =
-    typeof window !== 'undefined'
+    typeof window !== "undefined"
       ? window.location.origin
-      : 'https://worldnow.news';
+      : "https://worldnow.news";
 
   usePageMetadata({
-    title: 'WORLD NOW | Pakistan and World News',
+    title: "WORLD NOW | Pakistan and World News",
     description:
-      'Read the latest independent news, analysis, and updates from Pakistan and around the world.',
+      "Read the latest independent news, analysis, and updates from Pakistan and around the world.",
     url: `${appUrl}/`,
-    type: 'website',
-    image: '/browserlogo.png',
+    type: "website",
+    image: "/browserlogo.png",
   });
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
         setLoading(true);
-        const res = await api.get('/blogs', { params: { status: 'published', limit: '18' } });
+        const res = await api.get("/blogs", {
+          params: { status: "published", limit: "18" },
+        });
         setBlogs(Array.isArray(res.data) ? res.data : []);
       } catch (error) {
-        console.error('Failed to load homepage data:', error);
+        console.error("Failed to load homepage data:", error);
         setBlogs([]);
       } finally {
         setLoading(false);
@@ -44,11 +46,23 @@ export default function HomeLandingPage() {
   }, []);
 
   const featuredBlog = blogs.find((blog) => blog.isFeatured) || blogs[0];
+  const latestBlog = useMemo(
+    () =>
+      [...blogs].sort(
+        (left, right) =>
+          new Date(right.createdAt || 0).getTime() -
+          new Date(left.createdAt || 0).getTime(),
+      )[0] || null,
+    [blogs],
+  );
   const recentArticles = blogs.slice(0, 9);
   const mostViewedArticles = useMemo(
     () =>
       [...blogs]
-        .sort((left, right) => (Number(right.views) || 0) - (Number(left.views) || 0))
+        .sort(
+          (left, right) =>
+            (Number(right.views) || 0) - (Number(left.views) || 0),
+        )
         .slice(0, 6),
     [blogs],
   );
@@ -56,80 +70,128 @@ export default function HomeLandingPage() {
   return (
     <main className="min-h-screen bg-[#faf8f4] text-[#0d0d0d]">
       <section className="border-b border-[#e8e0d0] bg-white/90 backdrop-blur-sm">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-10 md:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:py-14">
-          <div className="space-y-6">
-            <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#b5150e]">
-              WORLD NOW · Independent newsroom
-            </p>
-            <h1 className="max-w-xl font-serif text-4xl font-black leading-tight text-[#0d0d0d] md:text-5xl lg:text-6xl">
-              A cleaner homepage for fast, trusted updates from Pakistan and the world.
-            </h1>
-            <p className="max-w-2xl text-base text-gray-700 md:text-lg">
-              Follow the latest politics, business, culture, and regional reports in one structured page designed for readers and publisher tools.
-            </p>
+        <div className="mx-auto max-w-7xl px-4 py-10 md:px-8 lg:py-14">
+          <div className="grid items-start gap-8 lg:grid-cols-[1.05fr_0.95fr]">
+            <div className="space-y-6">
+              <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#b5150e]">
+                WORLD NOW · Independent Global Newsroom
+              </p>
 
-            <div className="flex flex-wrap gap-3">
-              <Link
-                href="/archive"
-                className="rounded-full bg-[#b5150e] px-5 py-3 text-xs font-semibold uppercase tracking-[0.25em] text-white transition hover:bg-[#8a0f09]"
-              >
-                Browse latest stories
-              </Link>
-              <Link
-                href="/about"
-                className="rounded-full border border-[#d4cbb8] bg-white px-5 py-3 text-xs font-semibold uppercase tracking-[0.25em] text-[#0d0d0d] transition hover:border-[#b5150e] hover:text-[#b5150e]"
-              >
-                Learn about us
-              </Link>
-            </div>
+              <h1 className="max-w-2xl font-serif text-1xl font-black leading-tight text-[#0d0d0d] md:text-2xl lg:text-6xl">
+                Independent reporting on the stories shaping the
+                world.
+              </h1>
 
-            <div className="grid gap-3 border-t border-[#e8e0d0] pt-5 text-sm text-gray-700 sm:grid-cols-3">
-              <div className="rounded-2xl border border-[#e8e0d0] bg-[#fffdfa] p-4 shadow-sm">
-                <p className="text-[10px] uppercase tracking-[0.35em] text-[#b5150e]">Coverage</p>
-                <p className="mt-2 text-xl font-black text-[#0d0d0d]">Pakistan + world</p>
-              </div>
-              <div className="rounded-2xl border border-[#e8e0d0] bg-[#fffdfa] p-4 shadow-sm">
-                <p className="text-[10px] uppercase tracking-[0.35em] text-[#b5150e]">Editor focus</p>
-                <p className="mt-2 text-xl font-black text-[#0d0d0d]">Verified reports</p>
-              </div>
-              <div className="rounded-2xl border border-[#e8e0d0] bg-[#fffdfa] p-4 shadow-sm">
-                <p className="text-[10px] uppercase tracking-[0.35em] text-[#b5150e]">Reader value</p>
-                <p className="mt-2 text-xl font-black text-[#0d0d0d]">Clean navigation</p>
-              </div>
-            </div>
-          </div>
+              <p className="max-w-3xl text-base text-gray-700 md:text-lg">
+                Breaking news, verified updates, and in-depth analysis across
+                politics, business, technology, culture, and global affairs.
+              </p>
 
-          <div className="rounded-3xl border border-[#e8e0d0] bg-white p-5 shadow-sm">
-            {featuredBlog ? (
-              <>
-                <div className="mb-4 flex items-center justify-between text-[10px] uppercase tracking-[0.35em] text-[#b5150e]">
-                  <span>Featured story</span>
-                  <span>Home page spotlight</span>
-                </div>
-                <Link href={`/blog/${featuredBlog.slug}`} className="group block overflow-hidden rounded-2xl border border-[#e8e0d0] bg-[#f8f4ee]">
-                  <img
-                    src={featuredBlog.featuredImage}
-                    alt={featuredBlog.title}
-                    className="h-56 w-full object-cover transition duration-500 group-hover:scale-105"
-                  />
+             
+
+              <div className="flex flex-wrap gap-3">
+                <Link
+                  href="/archive"
+                  className="rounded-full bg-[#b5150e] px-5 py-3 text-xs font-semibold uppercase tracking-[0.25em] text-white transition hover:bg-[#8a0f09]"
+                >
+                  Browse headlines
                 </Link>
-                <div className="mt-4 space-y-3">
-                  <p className="text-[10px] uppercase tracking-[0.35em] text-[#b5150e]">
-                    {Array.isArray(featuredBlog.categories)
-                      ? featuredBlog.categories.join(', ')
-                      : featuredBlog.category}
-                  </p>
-                  <Link href={`/blog/${featuredBlog.slug}`} className="block text-2xl font-black font-serif leading-tight text-[#0d0d0d] transition hover:text-[#b5150e]">
-                    {featuredBlog.title}
-                  </Link>
-                  <p className="text-sm text-gray-700">{featuredBlog.excerpt}</p>
-                </div>
-              </>
-            ) : (
-              <div className="rounded-2xl border border-dashed border-[#d4cbb8] bg-[#faf8f4] p-6 text-sm text-gray-600">
-                No featured story is available right now.
+
+                <Link
+                  href="/about"
+                  className="rounded-full border border-[#d4cbb8] bg-white px-5 py-3 text-xs font-semibold uppercase tracking-[0.25em] text-[#0d0d0d] transition hover:border-[#b5150e] hover:text-[#b5150e]"
+                >
+                  About World Now
+                </Link>
               </div>
-            )}
+
+              <p className="text-sm text-gray-500">
+                Independent editorial team · Fact-checked reporting · Global
+                coverage updated daily
+              </p>
+
+              <div className="grid gap-3 border-t border-[#e8e0d0] pt-5 text-sm text-gray-700 sm:grid-cols-3">
+                <div className="rounded-2xl border border-[#e8e0d0] bg-[#fffdfa] p-4 shadow-sm">
+                  <p className="text-[10px] uppercase tracking-[0.35em] text-[#b5150e]">
+                    Coverage
+                  </p>
+                  <p className="mt-2 text-xl font-black text-[#0d0d0d]">
+                    Global + Pakistan
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-[#e8e0d0] bg-[#fffdfa] p-4 shadow-sm">
+                  <p className="text-[10px] uppercase tracking-[0.35em] text-[#b5150e]">
+                    Standards
+                  </p>
+                  <p className="mt-2 text-xl font-black text-[#0d0d0d]">
+                    Verified reporting
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-[#e8e0d0] bg-[#fffdfa] p-4 shadow-sm">
+                  <p className="text-[10px] uppercase tracking-[0.35em] text-[#b5150e]">
+                    Updates
+                  </p>
+                  <p className="mt-2 text-xl font-black text-[#0d0d0d]">
+                    24/7 coverage
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <aside className="rounded-3xl border border-[#e8e0d0] bg-white p-5 shadow-sm md:p-6">
+              <div className="mb-4 flex items-center justify-between text-[10px] uppercase tracking-[0.35em] text-[#b5150e]">
+                <span>Most recent</span>
+                <span>Freshly added</span>
+              </div>
+
+              {latestBlog ? (
+                <>
+                  <Link
+                    href={`/blog/${latestBlog.slug}`}
+                    className="group block overflow-hidden rounded-2xl border border-[#e8e0d0] bg-[#f8f4ee]"
+                  >
+                    <img
+                      src={latestBlog.featuredImage}
+                      alt={latestBlog.title}
+                      className="h-52 w-full object-cover transition duration-500 group-hover:scale-105"
+                    />
+                  </Link>
+
+                  <div className="mt-4 space-y-3">
+                    <p className="text-[10px] uppercase tracking-[0.35em] text-[#b5150e]">
+                      {Array.isArray(latestBlog.categories)
+                        ? latestBlog.categories.join(", ")
+                        : latestBlog.category}
+                    </p>
+
+                    <Link
+                      href={`/blog/${latestBlog.slug}`}
+                      className="block font-serif text-2xl font-black leading-tight text-[#0d0d0d] transition hover:text-[#b5150e]"
+                    >
+                      {latestBlog.title}
+                    </Link>
+
+                    <p className="text-sm text-gray-700">{latestBlog.excerpt}</p>
+
+                    <div className="flex items-center justify-between border-t border-[#e8e0d0] pt-3 text-[10px] uppercase tracking-[0.25em] text-gray-500">
+                      <span>By {latestBlog.author}</span>
+                      <span>
+                        {new Date(latestBlog.createdAt).toLocaleDateString(
+                          "en-US",
+                          { month: "short", day: "numeric", year: "numeric" },
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="rounded-2xl border border-dashed border-[#d4cbb8] bg-[#faf8f4] p-6 text-sm text-gray-600">
+                  No recent article is available yet.
+                </div>
+              )}
+            </aside>
           </div>
         </div>
       </section>
@@ -137,10 +199,17 @@ export default function HomeLandingPage() {
       <section className="mx-auto max-w-7xl px-4 py-10 md:px-8">
         <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.35em] text-[#b5150e] font-bold">Recent articles</p>
-            <h2 className="mt-2 font-serif text-2xl font-black text-[#0d0d0d] md:text-3xl">Latest reports from the newsroom</h2>
+            <p className="text-[10px] uppercase tracking-[0.35em] text-[#b5150e] font-bold">
+              Recent articles
+            </p>
+            <h2 className="mt-2 font-serif text-2xl font-black text-[#0d0d0d] md:text-3xl">
+              Latest reports from the newsroom
+            </h2>
           </div>
-          <Link href="/archive" className="text-xs uppercase tracking-[0.25em] text-[#b5150e] hover:text-[#8a0f09] font-semibold">
+          <Link
+            href="/archive"
+            className="text-xs uppercase tracking-[0.25em] text-[#b5150e] hover:text-[#8a0f09] font-semibold"
+          >
             View all updates →
           </Link>
         </div>
@@ -158,26 +227,16 @@ export default function HomeLandingPage() {
         )}
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-8 px-4 pb-14 md:px-8 lg:grid-cols-[0.95fr_1.05fr]">
-        <article className="rounded-3xl border border-[#e8e0d0] bg-white p-6 shadow-sm">
-          <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.35em] text-[#b5150e] font-bold">
-            <Globe className="h-3.5 w-3.5" />
-            <span>Why this homepage works</span>
-          </div>
-          <h3 className="mt-4 font-serif text-2xl font-black text-[#0d0d0d]">A stronger publisher-first landing page</h3>
-          <p className="mt-3 text-sm text-gray-700 leading-relaxed">
-            The new homepage gives readers a clearer starting point, highlights the latest coverage, and keeps the archive-style category feed available for deep browsing. This improves readability, trust, and the overall site structure that publishers value.
-          </p>
-          <div className="mt-5 rounded-2xl border border-dashed border-[#d4cbb8] bg-[#faf8f4] p-4 text-center text-xs uppercase tracking-[0.25em] text-gray-500">
-            AdSense-friendly placement area
-          </div>
-        </article>
-
+      <section className="mx-auto grid max-w-7xl gap-8 px-4 pb-14 md:px-8">
         <article className="rounded-3xl border border-[#e8e0d0] bg-white p-6 shadow-sm">
           <div className="mb-5 flex items-center justify-between gap-3">
             <div>
-              <p className="text-[10px] uppercase tracking-[0.35em] text-[#b5150e] font-bold">Most viewed</p>
-              <h3 className="mt-2 font-serif text-2xl font-black text-[#0d0d0d]">Popular stories this week</h3>
+              <p className="text-[10px] uppercase tracking-[0.35em] text-[#b5150e] font-bold">
+                Most viewed
+              </p>
+              <h3 className="mt-2 font-serif text-2xl font-black text-[#0d0d0d]">
+                Popular stories this week
+              </h3>
             </div>
             <TrendingUp className="h-4 w-4 text-[#b5150e]" />
           </div>
@@ -190,23 +249,28 @@ export default function HomeLandingPage() {
                   href={`/blog/${article.slug}`}
                   className="group flex gap-4 rounded-2xl border border-[#e8e0d0] bg-[#fffdfa] p-4 transition hover:border-[#b5150e]/40 hover:bg-white"
                 >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#0d0d0d] text-xs font-black text-white">0{index + 1}</span>
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#0d0d0d] text-xs font-black text-white">
+                    0{index + 1}
+                  </span>
                   <div className="min-w-0">
                     <p className="text-[10px] uppercase tracking-[0.25em] text-[#b5150e] font-semibold">
                       {Array.isArray(article.categories)
-                        ? article.categories.join(', ')
+                        ? article.categories.join(", ")
                         : article.category}
                     </p>
                     <h4 className="mt-1 font-serif text-lg font-black leading-tight text-[#0d0d0d] group-hover:text-[#b5150e] transition">
                       {article.title}
                     </h4>
-                    <p className="mt-2 text-xs text-gray-500">{Number(article.views) || 0} views</p>
+                    <p className="mt-2 text-xs text-gray-500">
+                      {Number(article.views) || 0} views
+                    </p>
                   </div>
                 </Link>
               ))
             ) : (
               <div className="rounded-2xl border border-dashed border-[#d4cbb8] bg-[#faf8f4] p-5 text-sm text-gray-600">
-                Popular article data will appear here as readers engage with the site.
+                Popular article data will appear here as readers engage with the
+                site.
               </div>
             )}
           </div>
