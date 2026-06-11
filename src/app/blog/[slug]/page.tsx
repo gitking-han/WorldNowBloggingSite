@@ -47,9 +47,9 @@ export default function BlogDetail() {
 
         if (res.data.category) {
           const relatedRes = await api.get('/blogs', {
-            params: { category: res.data.category, status: 'published', limit: 3 }
+            params: { category: res.data.category, status: 'published', limit: 6 }
           });
-          const filtered = (relatedRes.data || []).filter((b: Blog) => b._id !== res.data._id).slice(0, 3);
+          const filtered = (relatedRes.data || []).filter((b: Blog) => b._id !== res.data._id).slice(0, 6);
           setRelatedBlogs(filtered);
         }
       } catch (err) {
