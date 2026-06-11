@@ -155,11 +155,11 @@ export default function HomeLandingPage() {
                     <img
                       src={latestBlog.featuredImage}
                       alt={latestBlog.title}
-                      className="h-52 w-full object-cover transition duration-500 group-hover:scale-105"
+                      className="h-auto w-full object-cover transition duration-500 group-hover:scale-105"
                     />
                   </Link>
 
-                  <div className="mt-4 space-y-3">
+                  <div className="mt-10 space-y-3">
                     <p className="text-[10px] uppercase tracking-[0.35em] text-[#b5150e]">
                       {Array.isArray(latestBlog.categories)
                         ? latestBlog.categories.join(", ")
@@ -168,12 +168,12 @@ export default function HomeLandingPage() {
 
                     <Link
                       href={`/blog/${latestBlog.slug}`}
-                      className="block font-serif text-2xl font-black leading-tight text-[#0d0d0d] transition hover:text-[#b5150e]"
+                      className="mt-4 block font-serif text-2xl font-black leading-tight text-[#0d0d0d] transition hover:text-[#b5150e]"
                     >
                       {latestBlog.title}
                     </Link>
 
-                    <p className="text-sm text-gray-700">{latestBlog.excerpt}</p>
+                    <p className="text-sm text-gray-700 mt-2">{latestBlog.excerpt}</p>
 
                     <div className="flex items-center justify-between border-t border-[#e8e0d0] pt-3 text-[10px] uppercase tracking-[0.25em] text-gray-500">
                       <span>By {latestBlog.author}</span>
