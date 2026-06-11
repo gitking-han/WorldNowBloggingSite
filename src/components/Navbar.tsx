@@ -47,7 +47,7 @@ export default function Navbar({ categories, regions }: NavbarProps) {
       : DEFAULT_REGIONS;
 
   return (
-    <nav className="relative z-50 w-full border-b border-[#12203f] bg-gradient-to-r from-[#020817] via-[#03112f] to-[#071426]">
+    <nav className="sticky top-0 z-50 border-b border-[#12203f] bg-gradient-to-r from-[#020817] via-[#03112f] to-[#071426] shadow-lg">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
 
         {/* MAIN ROW */}
