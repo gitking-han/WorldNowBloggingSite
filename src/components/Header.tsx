@@ -122,9 +122,9 @@ export default function Header({ onSearch, searchTerm = "" }: HeaderProps) {
             </span>
             <div className="w-48 h-[3px] bg-gradient-to-r from-transparent via-[#b5150e] to-transparent my-2" />
             <span className="font-sans text-[10px] uppercase tracking-[0.25em] text-[#555] font-semibold">
-              Pakistan's Independent Voice
+              Your Trusted Source for Global News and Insights
             </span>
-          </div>
+          </div> 
 
           <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-end gap-3 w-full">
             <form

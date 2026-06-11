@@ -61,7 +61,7 @@ function HomePageContent() {
   const featuredBlog = blogs.find((b) => b.isFeatured) || blogs[0];
   const latestArticles = blogs.filter((b) => b._id !== featuredBlog?._id);
   const sideArticles = latestArticles.slice(0, 5);
-  const gridArticles = latestArticles.slice(5);
+  const gridArticles = latestArticles.slice(0, 14);
 
   const handleClearFilters = () => {
     window.location.href = "/";

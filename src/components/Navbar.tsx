@@ -28,7 +28,7 @@ export default function Navbar({ categories, regions }: NavbarProps) {
 
   const isRouteActive = (slug: string) => {
     if (slug === '') {
-      return pathname === '/' && !searchParams.has('category') && !searchParams.has('region');
+      return (pathname === '/' || pathname === '/home') && !searchParams.has('category') && !searchParams.has('region');
     }
 
     if (pathname.startsWith('/blog/')) {
@@ -59,7 +59,7 @@ export default function Navbar({ categories, regions }: NavbarProps) {
         <ul className="list-none flex flex-col md:flex-row md:flex-wrap items-stretch gap-0 w-full m-0 p-0">
           <li>
             <Link
-              href="/"
+              href="/home"
               className={`inline-flex items-center px-5 py-4 text-[12.5px] font-medium tracking-widest uppercase border-b md:border-b-0 md:border-r border-[#1a1a1a] transition ${
                 isRouteActive('') ? 'bg-[#b5150e] text-white' : 'text-gray-300 hover:bg-[#b5150e] hover:text-white'
               }`}
