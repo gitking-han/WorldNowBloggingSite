@@ -10,7 +10,7 @@ export default function Footer() {
     setOpenMenu(openMenu === menu ? null : menu);
   };
   return (
-    <footer className="w-full bg-[#0a0a0a] text-gray-400 py-16 px-6 md:px-8 border-t-8 border-[#b5150e] font-sans">
+    <footer className="w-full bg-gradient-to-r from-[#020817] via-[#03112f] to-[#071426] text-gray-400 py-16 px-6 md:px-8 border-t-8 border-[#b5150e]">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 border-b border-neutral-800 pb-12 mb-8">
           <div className="flex flex-col gap-4">
