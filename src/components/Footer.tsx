@@ -10,7 +10,7 @@ export default function Footer() {
     setOpenMenu(openMenu === menu ? null : menu);
   };
   return (
-    <footer className="w-full bg-gradient-to-r from-[#020817] via-[#03112f] to-[#071426] text-gray-400 py-16 px-6 md:px-8 border-t-8 border-[#b5150e]">
+    <footer className="w-full bg-gradient-to-r from-[#020817] via-[#03112f] to-[#071426] text-white py-16 px-6 md:px-8 border-t-8 border-[#b5150e]">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 border-b border-neutral-800 pb-12 mb-8">
           <div className="flex flex-col gap-4">
@@ -31,13 +31,12 @@ export default function Footer() {
               Pakistan's Independent Voice
             </span> */}
             <p className="text-xs text-gray-500 leading-relaxed italic font-serif">
-              "Committed to truth, independent of power, in service of the
-              people of Pakistan."
+              "Your Trusted Source for Global News and Insights"
             </p>
           </div>
 
           <div>
-            <h4 className="text-[10px] uppercase tracking-[0.18em] text-gray-300 font-bold mb-4 pb-2 border-b border-neutral-800">
+            <h4 className="text-[10px] uppercase text-white font-bold mb-4 pb-2 border-b border-neutral-800">
               Policy Standards
             </h4>
             <ul className="flex flex-col gap-2 text-xs">
@@ -81,7 +80,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-[10px] uppercase tracking-[0.18em] text-gray-300 font-bold mb-4 pb-2 border-b border-neutral-800">
+            <h4 className="text-[10px] uppercase text-white font-bold mb-4 pb-2 border-b border-neutral-800">
               Company
             </h4>
             <ul className="flex flex-col gap-2 text-xs">
@@ -205,7 +204,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-[10px] uppercase tracking-[0.18em] text-gray-300 font-bold mb-4 pb-2 border-b border-neutral-800">
+            <h4 className="text-[10px] uppercase text-white font-bold mb-4 pb-2 border-b border-neutral-800">
               Offices & Contact
             </h4>
             <p className="text-xs text-gray-500 leading-relaxed mb-1">
@@ -222,8 +221,7 @@ export default function Footer() {
 
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] text-gray-600">
           <span>
-            © 2026 WORLD NOW. All rights reserved. Registered with PEMRA & PFUJ
-            as a premier digital publisher.
+            © 2026 WORLD NOW. All rights reserved.
           </span>
           <div className="flex gap-4">
             <a
