@@ -27,9 +27,9 @@ export default function Footer() {
                 className="w-48 h-auto"
               />
             </Link>
-            <span className="text-[10px] uppercase tracking-[0.2em] text-[#c9922a] font-semibold -mt-2">
+            {/* <span className="text-[10px] uppercase tracking-[0.2em] text-[#c9922a] font-semibold -mt-2">
               Pakistan's Independent Voice
-            </span>
+            </span> */}
             <p className="text-xs text-gray-500 leading-relaxed italic font-serif">
               "Committed to truth, independent of power, in service of the
               people of Pakistan."
