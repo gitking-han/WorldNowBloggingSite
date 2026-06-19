@@ -1,19 +1,17 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
-import { usePageMetadata } from '@/utils/seo';
+import { SITE_URL } from '@/lib/site';
 
-export const dynamic = 'force-dynamic';
+export const metadata = {
+  title: 'RSS Feeds | WORLD NOW',
+  description: 'Subscribe to WORLD NOW RSS feeds for automated updates on news, categories, and latest articles.',
+  alternates: {
+    canonical: `${SITE_URL}/rss`,
+  },
+};
 
 export default function RSS() {
-  usePageMetadata({
-    title: 'RSS Feeds | WORLD NOW',
-    description: 'Subscribe to WORLD NOW RSS feeds for automated updates on news, categories, and latest articles.',
-    url: `${typeof window !== 'undefined' ? window.location.origin : 'https://worldnow.news'}/rss`,
-  });
-
-  const feedUrl = typeof window !== 'undefined' ? window.location.origin : 'https://worldnow.news';
+  const feedUrl = SITE_URL;
 
   return (
     <div className="min-h-screen bg-[#faf8f4]">

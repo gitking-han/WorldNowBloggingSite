@@ -7,6 +7,7 @@ import { usePageMetadata } from '@/utils/seo';
 import { Blog } from '@/types';
 import ArticleCard from '@/components/ArticleCard';
 import { useSearchParams } from 'next/navigation';
+import { SITE_URL } from '@/lib/site';
 
 export const dynamic = 'force-dynamic';
 
@@ -22,7 +23,7 @@ function ArchivePageContent() {
   const appUrl =
     typeof window !== 'undefined'
       ? window.location.origin
-      : 'https://worldnow.news';
+      : SITE_URL;
 
   usePageMetadata({
     title: 'WORLD NOW | Pakistan and World News',

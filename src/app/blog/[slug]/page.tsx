@@ -9,6 +9,7 @@ import { renderMarkdown } from '@/utils/markdown';
 import { usePageMetadata } from '@/utils/seo';
 import { Blog, Comment } from '@/types';
 import ArticleCard from '@/components/ArticleCard';
+import { SITE_URL } from '@/lib/site';
 
 export const dynamic = 'force-dynamic';
 
@@ -30,7 +31,7 @@ export default function BlogDetail() {
   usePageMetadata({
     title: blog?.seoTitle || blog?.title || 'Blog Post',
     description: blog?.metaDescription || blog?.excerpt || '',
-    url: `${typeof window !== 'undefined' ? window.location.origin : 'https://worldnow.news'}/blog/${slug}`,
+    url: `${typeof window !== 'undefined' ? window.location.origin : SITE_URL}/blog/${slug}`,
     image: "/browserlogo.png",
     type: 'article',
   });

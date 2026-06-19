@@ -7,6 +7,7 @@ import api from '@/utils/api';
 import { usePageMetadata } from '@/utils/seo';
 import { Blog } from '@/types';
 import ArticleCard from '@/components/ArticleCard';
+import { SITE_URL } from '@/lib/site';
 
 export default function HomeLandingPage() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -15,7 +16,7 @@ export default function HomeLandingPage() {
   const appUrl =
     typeof window !== 'undefined'
       ? window.location.origin
-      : 'https://worldnow.news';
+      : SITE_URL;
 
   usePageMetadata({
     title: 'WORLD NOW | Pakistan and World News',

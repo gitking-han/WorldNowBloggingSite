@@ -1,5 +1,6 @@
 import { connectToDatabase } from '@/lib/db';
 import Blog from '@/lib/models/Blog';
+import { SITE_URL } from '@/lib/site';
 
 const escapeXml = (value: string) =>
   String(value || '')
@@ -25,7 +26,7 @@ export async function GET(request: Request) {
     }
 
     const blogs = await Blog.find(query).sort({ createdAt: -1 }).limit(Math.max(1, Math.min(limit, 30)));
-    const siteUrl = process.env.APP_URL || 'https://worldnow.news';
+    const siteUrl = SITE_URL;
 
     const items = blogs
       .map((blog: any) => {

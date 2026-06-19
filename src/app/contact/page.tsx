@@ -5,6 +5,7 @@ import { Send, CheckCircle, AlertCircle } from 'lucide-react';
 import api from '@/utils/api';
 import { usePageMetadata } from '@/utils/seo';
 import Link from 'next/link';
+import { SITE_URL } from '@/lib/site';
 
 export const dynamic = 'force-dynamic';
 
@@ -22,7 +23,7 @@ export default function Contact() {
   usePageMetadata({
     title: 'Contact WORLD NOW | Get in Touch',
     description: 'Contact the WORLD NOW editorial team with tips, feedback, and inquiries. We value your input.',
-    url: `${typeof window !== 'undefined' ? window.location.origin : 'https://worldnow.news'}/contact`,
+    url: `${typeof window !== 'undefined' ? window.location.origin : SITE_URL}/contact`,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

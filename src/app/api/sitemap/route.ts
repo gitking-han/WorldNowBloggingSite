@@ -1,5 +1,6 @@
 import { connectToDatabase } from '@/lib/db';
 import Blog from '@/lib/models/Blog';
+import { SITE_URL } from '@/lib/site';
 
 const staticRoutes = [
   ['', 'always', '1.0'],
@@ -15,7 +16,7 @@ export async function GET() {
   try {
     await connectToDatabase();
     const blogs = await Blog.find({ status: 'published' }).sort({ updatedAt: -1 }).limit(200);
-    const siteUrl = process.env.APP_URL || 'https://worldnow.news';
+    const siteUrl = SITE_URL;
 
     const urls = staticRoutes
       .map(([path, changefreq, priority]) => `  <url>

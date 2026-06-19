@@ -1,18 +1,16 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
-import { usePageMetadata } from '@/utils/seo';
+import { SITE_URL } from '@/lib/site';
 
-export const dynamic = 'force-dynamic';
+export const metadata = {
+  title: 'Terms & Conditions | WORLD NOW',
+  description: 'Read the terms and conditions for using WORLD NOW, our publisher content, and the site’s legal guidelines.',
+  alternates: {
+    canonical: `${SITE_URL}/terms`,
+  },
+};
 
 export default function Terms() {
-  usePageMetadata({
-    title: 'Terms & Conditions | WORLD NOW',
-    description: 'Read the terms and conditions for using WORLD NOW, our publisher content, and the site’s legal guidelines.',
-    url: `${typeof window !== 'undefined' ? window.location.origin : 'https://worldnow.news'}/terms`,
-  });
-
   return (
     <div className="min-h-screen bg-[#faf8f4]">
       <div className="max-w-5xl mx-auto px-4 md:px-8 py-12">

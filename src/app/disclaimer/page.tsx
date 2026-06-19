@@ -1,18 +1,16 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
-import { usePageMetadata } from '@/utils/seo';
+import { SITE_URL } from '@/lib/site';
 
-export const dynamic = 'force-dynamic';
+export const metadata = {
+  title: 'Disclaimer | WORLD NOW',
+  description: 'Read our editorial and site disclaimer for content accuracy, advertising, and external links.',
+  alternates: {
+    canonical: `${SITE_URL}/disclaimer`,
+  },
+};
 
 export default function Disclaimer() {
-  usePageMetadata({
-    title: 'Disclaimer | WORLD NOW',
-    description: 'Read our editorial and site disclaimer for content accuracy, advertising, and external links.',
-    url: `${typeof window !== 'undefined' ? window.location.origin : 'https://worldnow.news'}/disclaimer`,
-  });
-
   return (
     <div className="min-h-screen bg-[#faf8f4]">
       <div className="max-w-5xl mx-auto px-4 md:px-8 py-12">

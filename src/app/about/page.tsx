@@ -1,18 +1,16 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
-import { usePageMetadata } from '@/utils/seo';
+import { SITE_URL } from '@/lib/site';
 
-export const dynamic = 'force-dynamic';
+export const metadata = {
+  title: 'About WORLD NOW | Our Mission & Values',
+  description: 'Learn about WORLD NOW, Pakistan\'s independent news platform. Our mission is to deliver truth-driven journalism.',
+  alternates: {
+    canonical: `${SITE_URL}/about`,
+  },
+};
 
 export default function About() {
-  usePageMetadata({
-    title: 'About WORLD NOW | Our Mission & Values',
-    description: 'Learn about WORLD NOW, Pakistan\'s independent news platform. Our mission is to deliver truth-driven journalism.',
-    url: `${typeof window !== 'undefined' ? window.location.origin : 'https://worldnow.news'}/about`,
-  });
-
   const pillars = [
     {
       icon: '📰',

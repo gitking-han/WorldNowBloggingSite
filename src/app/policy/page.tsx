@@ -1,18 +1,16 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
-import { usePageMetadata } from '@/utils/seo';
+import { SITE_URL } from '@/lib/site';
 
-export const dynamic = 'force-dynamic';
+export const metadata = {
+  title: 'Privacy Policy | WORLD NOW',
+  description: 'WORLD NOW Privacy Policy - How we handle your data and respect your privacy.',
+  alternates: {
+    canonical: `${SITE_URL}/policy`,
+  },
+};
 
 export default function Policy() {
-  usePageMetadata({
-    title: 'Privacy Policy | WORLD NOW',
-    description: 'WORLD NOW Privacy Policy - How we handle your data and respect your privacy.',
-    url: `${typeof window !== 'undefined' ? window.location.origin : 'https://worldnow.news'}/policy`,
-  });
-
   return (
     <div className="min-h-screen bg-[#faf8f4]">
       <div className="max-w-5xl mx-auto px-4 md:px-8 py-12">
