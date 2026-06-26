@@ -4,6 +4,8 @@ import { FormEvent, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import api from '@/utils/api';
+import { usePageMetadata } from '@/utils/seo';
+import { SITE_URL } from "@/lib/site";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -11,6 +13,18 @@ export default function AdminLoginPage() {
   const [password, setPassword] = useState('admin123');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const appUrl =
+        typeof window !== "undefined" ? window.location.origin : SITE_URL;
+    
+      usePageMetadata({
+        title: "WORLD NOW | Pakistan and World News",
+        description:
+          "Browse the latest independent news and analysis from Pakistan and around the world.",
+        url: `${appUrl}/archive`,
+        type: "website",
+        image: "/browserlogo.png",
+      });
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();

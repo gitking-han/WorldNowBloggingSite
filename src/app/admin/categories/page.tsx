@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import api from '@/utils/api';
 import { Category } from '@/types';
+import { usePageMetadata } from '@/utils/seo';
+import { SITE_URL } from "@/lib/site";
 
 export default function CategoriesPage() {
   const router = useRouter();
@@ -14,6 +16,18 @@ export default function CategoriesPage() {
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
 
+   const appUrl =
+      typeof window !== "undefined" ? window.location.origin : SITE_URL;
+  
+    usePageMetadata({
+      title: "WORLD NOW | Pakistan and World News",
+      description:
+        "Browse the latest independent news and analysis from Pakistan and around the world.",
+      url: `${appUrl}/archive`,
+      type: "website",
+      image: "/browserlogo.png",
+    });
+    
   const loadCategories = async () => {
     try {
       const response = await api.get('/categories');
