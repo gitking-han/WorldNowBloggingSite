@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Head from 'next/head';
 import { Send, CheckCircle, AlertCircle } from 'lucide-react';
 import api from '@/utils/api';
 import { usePageMetadata } from '@/utils/seo';
@@ -53,7 +54,32 @@ export default function Contact() {
   };
 
   return (
-    <div className="min-h-screen bg-[#faf8f4]">
+    <>
+      <Head>
+        <title>Contact WORLD NOW | Get in Touch</title>
+        <meta
+          name="description"
+          content="Contact the WORLD NOW editorial team with tips, feedback, and inquiries. We value your input."
+        />
+        <meta property="og:title" content="Contact WORLD NOW | Get in Touch" />
+        <meta
+          property="og:description"
+          content="Contact the WORLD NOW editorial team with tips, feedback, and inquiries. We value your input."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${typeof window !== 'undefined' ? window.location.origin : SITE_URL}/contact`} />
+        <meta property="og:image" content={`${typeof window !== 'undefined' ? window.location.origin : SITE_URL}/browserlogo.png`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Contact WORLD NOW | Get in Touch" />
+        <meta
+          name="twitter:description"
+          content="Contact the WORLD NOW editorial team with tips, feedback, and inquiries. We value your input."
+        />
+        <meta name="twitter:image" content={`${typeof window !== 'undefined' ? window.location.origin : SITE_URL}/browserlogo.png`} />
+        <link rel="canonical" href={`${typeof window !== 'undefined' ? window.location.origin : SITE_URL}/contact`} />
+      </Head>
+
+      <div className="min-h-screen bg-[#faf8f4]">
       <div className="max-w-6xl mx-auto px-4 md:px-8 py-12">
         <div className="mb-8">
           <Link href="/" className="text-[#b5150e] hover:text-[#8a0f09] font-semibold text-sm">
@@ -135,6 +161,7 @@ export default function Contact() {
           </section>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

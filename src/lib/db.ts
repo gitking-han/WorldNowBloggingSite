@@ -27,6 +27,17 @@ export function getSeedData() {
   }
 }
 
+export function writeSeedData(data: Record<string, any>) {
+  try {
+    const dataFile = path.join(process.cwd(), 'data', 'db.json');
+    fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
+    return true;
+  } catch (error) {
+    console.warn('Unable to write seed data:', error);
+    return false;
+  }
+}
+
 export async function connectToDatabase() {
   if (cached.conn) {
     return cached.conn;

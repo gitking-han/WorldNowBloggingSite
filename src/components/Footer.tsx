@@ -132,12 +132,6 @@ export default function Footer() {
                       Economy
                     </Link>
                     <Link
-                      href="/?category=sports"
-                      className="hover:text-white"
-                    >
-                      Sports
-                    </Link>
-                    <Link
                       href="/?category=science"
                       className="hover:text-white"
                     >
@@ -150,10 +144,10 @@ export default function Footer() {
                       World
                     </Link>
                     <Link
-                      href="/?category=culture"
+                      href="/?category=immigration"
                       className="hover:text-white"
                     >
-                      Culture
+                      Immigration
                     </Link>
                   </div>
                 )}
@@ -193,9 +187,6 @@ export default function Footer() {
                     </Link>
                     <Link href="/?region=oceania" className="hover:text-white">
                       Oceania
-                    </Link>
-                    <Link href="/?region=global" className="hover:text-white">
-                      Global
                     </Link>
                   </div>
                 )}

@@ -15,21 +15,15 @@
       "slug": "technology",
       "description": "Artificial intelligence, electronic innovation, mobile hardware, and startups."
     },
- 
-    {
-      "name": "Sports",
-      "slug": "sports",
-      "description": "Cricket updates, national squad announcements, and regional fixtures."
-    },
-    {
-      "name": "Culture",
-      "slug": "culture",
-      "description": "Arts, literature festivals, cinema, and societal changes."
-    },
     {
       "name": "Science",
       "slug": "science",
       "description": "Climate research, medicine, space exploration, and innovation."
+    },
+    {
+      "name": "Immigration",
+      "slug": "immigration",
+      "description": "Migration policy, border movements, asylum, and immigrant communities."
     }
   ],
   "regions": [
@@ -38,8 +32,7 @@
     { "name": "Asia", "slug": "asia", "description": "Coverage desk for Asia and regional developments." },
     { "name": "Middle East", "slug": "middle-east", "description": "Coverage desk for the Middle East and Gulf reporting." },
     { "name": "Africa", "slug": "africa", "description": "Coverage desk for Africa and continental updates." },
-    { "name": "Oceania", "slug": "oceania", "description": "Coverage desk for Oceania and Pacific coverage." },
-    { "name": "Global", "slug": "global", "description": "Coverage desk for worldwide and cross-border stories." }
+    { "name": "Oceania", "slug": "oceania", "description": "Coverage desk for Oceania and Pacific coverage." }
   ],
   "blogs": [
     {

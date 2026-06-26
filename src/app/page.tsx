@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
+import Head from "next/head";
 import Link from "next/link";
 import { Globe, Loader2, TrendingUp } from "lucide-react";
 import api from "@/utils/api";
@@ -69,7 +70,32 @@ export default function HomeLandingPage() {
   );
 
   return (
-    <main className="min-h-screen bg-[#faf8f4] text-[#0d0d0d]">
+    <>
+      <Head>
+        <title>WORLD NOW | Pakistan and World News</title>
+        <meta
+          name="description"
+          content="Read the latest independent news, analysis, and updates from Pakistan and around the world."
+        />
+        <meta property="og:title" content="WORLD NOW | Pakistan and World News" />
+        <meta
+          property="og:description"
+          content="Read the latest independent news, analysis, and updates from Pakistan and around the world."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${appUrl}/`} />
+        <meta property="og:image" content={`${appUrl}/browserlogo.png`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="WORLD NOW | Pakistan and World News" />
+        <meta
+          name="twitter:description"
+          content="Read the latest independent news, analysis, and updates from Pakistan and around the world."
+        />
+        <meta name="twitter:image" content={`${appUrl}/browserlogo.png`} />
+        <link rel="canonical" href={`${appUrl}/`} />
+      </Head>
+
+      <main className="min-h-screen bg-[#faf8f4] text-[#0d0d0d]">
       <section className="border-b border-[#e8e0d0] bg-white/90 backdrop-blur-sm">
         <div className="mx-auto max-w-7xl px-4 py-10 md:px-8 lg:py-14">
           <div className="grid items-start gap-8 lg:grid-cols-[1.05fr_0.95fr]">
@@ -277,6 +303,7 @@ export default function HomeLandingPage() {
           </div>
         </article>
       </section>
-    </main>
+      </main>
+    </>
   );
 }

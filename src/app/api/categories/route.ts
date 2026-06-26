@@ -1,19 +1,23 @@
-import { connectToDatabase, getSeedData } from '@/lib/db';
+import { connectToDatabase, getSeedData, writeSeedData } from '@/lib/db';
 import Category from '@/lib/models/Category';
 
 export async function GET() {
   try {
     await connectToDatabase();
     const categories = await Category.find();
-    return Response.json(categories);
-  } catch (error: any) {
-    const seedData = getSeedData();
-    if (seedData?.categories) {
-      return Response.json(seedData.categories, { status: 200 });
+    if (Array.isArray(categories) && categories.length > 0) {
+      return Response.json(categories);
     }
-
-    return Response.json({ error: error.message || 'Failed to load categories.' }, { status: 500 });
+  } catch (error: any) {
+    console.warn('Database unavailable for categories, using seed data:', error.message);
   }
+
+  const seedData = getSeedData();
+  if (Array.isArray(seedData?.categories)) {
+    return Response.json(seedData.categories, { status: 200 });
+  }
+
+  return Response.json({ error: 'Failed to load categories.' }, { status: 500 });
 }
 
 export async function POST(request: Request) {
@@ -31,9 +35,32 @@ export async function POST(request: Request) {
       return Response.json({ error: 'Name and slug are required' }, { status: 400 });
     }
 
-    const category = await Category.create({ name, slug: slug.toLowerCase(), description });
-    return Response.json(category);
+    const normalizedSlug = String(slug).toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+    try {
+      const category = await Category.create({ name, slug: normalizedSlug, description });
+      return Response.json(category, { status: 201 });
+    } catch (error: any) {
+      const seedData = getSeedData() || { categories: [], regions: [], blogs: [], messages: [], seo: {} };
+      const nextCategories = Array.isArray(seedData.categories) ? [...seedData.categories] : [];
+      const existingIndex = nextCategories.findIndex((item: any) => String(item.slug || '').toLowerCase() === normalizedSlug);
+      if (existingIndex >= 0) {
+        return Response.json(nextCategories[existingIndex], { status: 200 });
+      }
+
+      const category = {
+        _id: `seed-${Date.now()}`,
+        name,
+        slug: normalizedSlug,
+        description: description || '',
+        createdAt: new Date().toISOString(),
+      };
+      nextCategories.push(category);
+      seedData.categories = nextCategories;
+      writeSeedData(seedData);
+      return Response.json(category, { status: 201 });
+    }
   } catch (error: any) {
-    return Response.json({ error: error.message }, { status: 500 });
+    return Response.json({ error: error.message || 'Unable to create category.' }, { status: 500 });
   }
 }

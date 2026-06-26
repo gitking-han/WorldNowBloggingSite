@@ -1,4 +1,4 @@
-import { connectToDatabase } from '@/lib/db';
+import { connectToDatabase, getSeedData, writeSeedData } from '@/lib/db';
 import Category from '@/lib/models/Category';
 
 export async function PUT(request: Request, { params }: { params: { slug: string } }) {
@@ -13,17 +13,30 @@ export async function PUT(request: Request, { params }: { params: { slug: string
     const name = String(body.name || '').trim();
     const slug = String(body.slug || name).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
-    const category = await Category.findOneAndUpdate(
-      { slug: params.slug },
-      { name, slug, description: body.description || '' },
-      { returnDocument: 'after' }
-    );
+    try {
+      const category = await Category.findOneAndUpdate(
+        { slug: params.slug },
+        { name, slug, description: body.description || '' },
+        { returnDocument: 'after' }
+      );
 
-    if (!category) {
-      return Response.json({ error: 'Category not found.' }, { status: 404 });
+      if (!category) {
+        return Response.json({ error: 'Category not found.' }, { status: 404 });
+      }
+
+      return Response.json(category);
+    } catch (error: any) {
+      const seedData = getSeedData() || { categories: [], regions: [], blogs: [], messages: [], seo: {} };
+      const nextCategories = Array.isArray(seedData.categories) ? [...seedData.categories] : [];
+      const categoryIndex = nextCategories.findIndex((item: any) => String(item.slug || '').toLowerCase() === String(params.slug).toLowerCase());
+      if (categoryIndex < 0) {
+        return Response.json({ error: 'Category not found.' }, { status: 404 });
+      }
+      nextCategories[categoryIndex] = { ...nextCategories[categoryIndex], name, slug, description: body.description || '' };
+      seedData.categories = nextCategories;
+      writeSeedData(seedData);
+      return Response.json(nextCategories[categoryIndex]);
     }
-
-    return Response.json(category);
   } catch (error: any) {
     return Response.json({ error: error.message || 'Unable to update category.' }, { status: 500 });
   }
@@ -36,13 +49,21 @@ export async function DELETE(request: Request, { params }: { params: { slug: str
       return Response.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    await connectToDatabase();
-    const category = await Category.findOneAndDelete({ slug: params.slug });
-    if (!category) {
-      return Response.json({ error: 'Category not found.' }, { status: 404 });
-    }
+    try {
+      await connectToDatabase();
+      const category = await Category.findOneAndDelete({ slug: params.slug });
+      if (!category) {
+        return Response.json({ error: 'Category not found.' }, { status: 404 });
+      }
 
-    return Response.json({ success: true });
+      return Response.json({ success: true });
+    } catch (error: any) {
+      const seedData = getSeedData() || { categories: [], regions: [], blogs: [], messages: [], seo: {} };
+      const nextCategories = Array.isArray(seedData.categories) ? seedData.categories.filter((item: any) => String(item.slug || '').toLowerCase() !== String(params.slug).toLowerCase()) : [];
+      seedData.categories = nextCategories;
+      writeSeedData(seedData);
+      return Response.json({ success: true });
+    }
   } catch (error: any) {
     return Response.json({ error: error.message || 'Unable to delete category.' }, { status: 500 });
   }

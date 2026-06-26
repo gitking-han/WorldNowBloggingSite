@@ -1,6 +1,7 @@
 'use client';
 
 import React, { Suspense, useEffect, useState } from 'react';
+import Head from 'next/head';
 import { Loader2, HelpCircle, Globe } from 'lucide-react';
 import api from '@/utils/api';
 import { usePageMetadata } from '@/utils/seo';
@@ -70,7 +71,32 @@ function ArchivePageContent() {
   };
 
   return (
-    <div className="w-full bg-[#faf8f4] text-[#0d0d0d] font-sans pb-16">
+    <>
+      <Head>
+        <title>Archive | WORLD NOW</title>
+        <meta
+          name="description"
+          content="Browse the latest independent news and analysis from Pakistan and around the world."
+        />
+        <meta property="og:title" content="Archive | WORLD NOW" />
+        <meta
+          property="og:description"
+          content="Browse the latest independent news and analysis from Pakistan and around the world."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${appUrl}/archive`} />
+        <meta property="og:image" content={`${appUrl}/browserlogo.png`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Archive | WORLD NOW" />
+        <meta
+          name="twitter:description"
+          content="Browse the latest independent news and analysis from Pakistan and around the world."
+        />
+        <meta name="twitter:image" content={`${appUrl}/browserlogo.png`} />
+        <link rel="canonical" href={`${appUrl}/archive`} />
+      </Head>
+
+      <div className="w-full bg-[#faf8f4] text-[#0d0d0d] font-sans pb-16">
       {(categoryFilter || regionFilter || searchFilter) && (
         <div className="w-full border-b border-[#d4cbb8] bg-white px-8 py-4">
           <div className="mx-auto flex max-w-7xl items-center justify-between">
@@ -217,7 +243,8 @@ function ArchivePageContent() {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </>
   );
 }
 

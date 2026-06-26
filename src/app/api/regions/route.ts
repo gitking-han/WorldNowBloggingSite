@@ -1,15 +1,5 @@
-import { connectToDatabase, getSeedData } from '@/lib/db';
+import { connectToDatabase, getSeedData, writeSeedData } from '@/lib/db';
 import Region from '@/lib/models/Region';
-
-const APPROVED_REGION_SLUGS = [
-  'europe',
-  'america',
-  'asia',
-  'middle-east',
-  'africa',
-  'oceania',
-  'global',
-];
 
 function normalizeSlug(value: string) {
   return String(value || '')
@@ -22,47 +12,23 @@ function normalizeSlug(value: string) {
 export async function GET() {
   try {
     await connectToDatabase();
-
-    const seedData = getSeedData();
-    const seedRegions = Array.isArray(seedData?.regions) ? seedData.regions : [];
-    const seedMap = new Map(
-      seedRegions.map((region: any) => [normalizeSlug(String(region?.slug || region?.name || '')), region])
-    );
-
-    await Region.deleteMany({ slug: { $nin: APPROVED_REGION_SLUGS } });
-
-    await Promise.all(
-      APPROVED_REGION_SLUGS.map(async (slug) => {
-        const seedRegion = seedMap.get(slug);
-        const name = String(seedRegion?.name || slug.split('-').map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join(' ')).trim();
-
-        await Region.findOneAndUpdate(
-          { slug },
-          {
-            $set: {
-              name,
-              description: String(seedRegion?.description || `Coverage desk for ${name}.`),
-            },
-          },
-          { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
-        );
-      })
-    );
-
-    const regions = await Region.find({ slug: { $in: APPROVED_REGION_SLUGS } }).sort({ name: 1 });
-    return Response.json(regions);
-  } catch (error: any) {
-    const seedData = getSeedData();
-    const fallbackRegions = (Array.isArray(seedData?.regions) ? seedData.regions : [])
-      .filter((region: any) => APPROVED_REGION_SLUGS.includes(normalizeSlug(String(region?.slug || region?.name || ''))))
-      .sort((a: any, b: any) => String(a.name || '').localeCompare(String(b.name || '')));
-
-    if (fallbackRegions.length > 0) {
-      return Response.json(fallbackRegions, { status: 200 });
+    const regions = await Region.find().sort({ name: 1 });
+    if (Array.isArray(regions) && regions.length > 0) {
+      return Response.json(regions);
     }
-
-    return Response.json({ error: error.message || 'Failed to load regions.' }, { status: 500 });
+  } catch (error: any) {
+    console.warn('Database unavailable for regions, using seed data:', error.message);
   }
+
+  const seedData = getSeedData();
+  const fallbackRegions = (Array.isArray(seedData?.regions) ? seedData.regions : [])
+    .sort((a: any, b: any) => String(a.name || '').localeCompare(String(b.name || '')));
+
+  if (fallbackRegions.length > 0) {
+    return Response.json(fallbackRegions, { status: 200 });
+  }
+
+  return Response.json({ error: 'Failed to load regions.' }, { status: 500 });
 }
 
 export async function POST(request: Request) {
@@ -72,7 +38,6 @@ export async function POST(request: Request) {
       return Response.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    await connectToDatabase();
     const body = await request.json();
     const name = String(body.name || '').trim();
     const slug = normalizeSlug(String(body.slug || name));
@@ -81,8 +46,29 @@ export async function POST(request: Request) {
       return Response.json({ error: 'Name and slug are required.' }, { status: 400 });
     }
 
-    const region = await Region.create({ name, slug, description: body.description || '' });
-    return Response.json(region, { status: 201 });
+    try {
+      await connectToDatabase();
+      const region = await Region.create({ name, slug, description: body.description || '' });
+      return Response.json(region, { status: 201 });
+    } catch (error: any) {
+      const seedData = getSeedData() || { categories: [], regions: [], blogs: [], messages: [], seo: {} };
+      const nextRegions = Array.isArray(seedData.regions) ? [...seedData.regions] : [];
+      const existingRegion = nextRegions.find((item: any) => normalizeSlug(String(item.slug || item.name || '')) === slug);
+      if (existingRegion) {
+        return Response.json(existingRegion, { status: 200 });
+      }
+      const region = {
+        _id: `seed-${Date.now()}`,
+        name,
+        slug,
+        description: body.description || '',
+        createdAt: new Date().toISOString(),
+      };
+      nextRegions.push(region);
+      seedData.regions = nextRegions;
+      writeSeedData(seedData);
+      return Response.json(region, { status: 201 });
+    }
   } catch (error: any) {
     return Response.json({ error: error.message || 'Unable to create region.' }, { status: 500 });
   }
