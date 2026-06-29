@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Menu, X, ChevronDown, Search } from 'lucide-react';
 import Link from 'next/link';
-import { useSearchParams, usePathname } from 'next/navigation';
+import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 
 interface NavbarProps {
   categories: Array<{ name: string; slug: string }>;
@@ -28,6 +28,25 @@ export default function Navbar({ categories, regions }: NavbarProps) {
 
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleSearchSubmit = (event?: React.FormEvent) => {
+    event?.preventDefault();
+
+    const trimmedQuery = searchQuery.trim();
+    setSearchOpen(false);
+    setSearchQuery('');
+    setIsOpen(false);
+
+    if (!trimmedQuery) {
+      router.push('/archive');
+      return;
+    }
+
+    const params = new URLSearchParams();
+    params.set('search', trimmedQuery);
+    router.push(`/archive?${params.toString()}`);
+  };
 
   const isRouteActive = (slug: string) => {
     if (slug === '') {
@@ -139,7 +158,7 @@ export default function Navbar({ categories, regions }: NavbarProps) {
             <div className="flex items-center gap-3 transition-all duration-300">
 
               {searchOpen ? (
-                <>
+                <form onSubmit={handleSearchSubmit} className="flex items-center gap-3">
                   <input
                     type="text"
                     value={searchQuery}
@@ -148,7 +167,12 @@ export default function Navbar({ categories, regions }: NavbarProps) {
                     className="w-72 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-white placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-[#e11d2f]"
                   />
 
+                  <button type="submit" className="bg-transparent border-none text-gray-300 hover:text-white">
+                    <Search className="h-5 w-5" />
+                  </button>
+
                   <button
+                    type="button"
                     onClick={() => {
                       setSearchOpen(false);
                       setSearchQuery('');
@@ -157,7 +181,7 @@ export default function Navbar({ categories, regions }: NavbarProps) {
                   >
                     <X className="h-5 w-5" />
                   </button>
-                </>
+                </form>
               ) : (
                 <button
                   onClick={() => setSearchOpen(true)}
@@ -236,13 +260,23 @@ export default function Navbar({ categories, regions }: NavbarProps) {
                 ))}
               </div>
 
-              <div className="mt-4 px-4">
-                <input
-                  type="text"
-                  placeholder="Search articles..."
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-gray-400 focus:outline-none"
-                />
-              </div>
+              <form onSubmit={handleSearchSubmit} className="mt-4 px-4">
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search articles..."
+                    className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-gray-400 focus:outline-none"
+                  />
+                  <button
+                    type="submit"
+                    className="rounded-lg border border-white/10 bg-white/5 p-3 text-white"
+                  >
+                    <Search className="h-4 w-4" />
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         )}

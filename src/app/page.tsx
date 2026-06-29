@@ -20,7 +20,7 @@ export default function HomeLandingPage() {
       : SITE_URL;
 
   usePageMetadata({
-    title: "WORLD NOW | Pakistan and World News",
+    title: "World Now | Global & Regional News",
     description:
       "Read the latest independent news, analysis, and updates from Pakistan and around the world.",
     url: `${appUrl}/`,
@@ -72,12 +72,12 @@ export default function HomeLandingPage() {
   return (
     <>
       <Head>
-        <title>WORLD NOW | Pakistan and World News</title>
+        <title>World Now | Global & Regional News</title>
         <meta
           name="description"
           content="Read the latest independent news, analysis, and updates from Pakistan and around the world."
         />
-        <meta property="og:title" content="WORLD NOW | Pakistan and World News" />
+        <meta property="og:title" content="World Now | Global & Regional News" />
         <meta
           property="og:description"
           content="Read the latest independent news, analysis, and updates from Pakistan and around the world."
@@ -86,7 +86,7 @@ export default function HomeLandingPage() {
         <meta property="og:url" content={`${appUrl}/`} />
         <meta property="og:image" content={`${appUrl}/browserlogo.png`} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="WORLD NOW | Pakistan and World News" />
+        <meta name="twitter:title" content="World Now | Global & Regional News" />
         <meta
           name="twitter:description"
           content="Read the latest independent news, analysis, and updates from Pakistan and around the world."

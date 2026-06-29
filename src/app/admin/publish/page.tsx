@@ -30,7 +30,7 @@ function PublishArticlePageContent() {
     typeof window !== "undefined" ? window.location.origin : SITE_URL;
 
   usePageMetadata({
-    title: "WORLD NOW | Pakistan and World News",
+    title: "World Now | Global & Regional News",
     description:
       "Browse the latest independent news and analysis from Pakistan and around the world.",
     url: `${appUrl}/archive`,

@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'WORLD NOW | Pakistan and World News',
+    default: 'World Now | Global & Regional News',
     template: '%s | WORLD NOW',
   },
   description:
@@ -20,8 +20,8 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    siteName: 'WORLD NOW',
-    title: 'WORLD NOW | Pakistan and World News',
+    siteName: 'World Now',
+    title: 'World Now | Global & Regional News',
     description:
       'Read the latest independent news, analysis, and updates from Pakistan and around the world.',
     url: SITE_URL,
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'WORLD NOW | Pakistan and World News',
+    title: 'World Now | Global & Regional News',
     description:
       'Read the latest independent news, analysis, and updates from Pakistan and around the world.',
     images: ['/browserlogo.png'],

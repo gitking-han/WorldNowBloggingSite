@@ -26,7 +26,10 @@ export default function BlogDetail() {
   const [commentMessage, setCommentMessage] = useState('');
   const [loading, setLoading] = useState(true);
 
-  const renderedContent = useMemo(() => renderMarkdown(blog?.content || ''), [blog?.content]);
+  const renderedContent = useMemo(
+    () => renderMarkdown(blog?.content || '', blog?.title || 'Article image'),
+    [blog?.content, blog?.title],
+  );
 
   usePageMetadata({
     title: blog?.seoTitle || blog?.title || 'Blog Post',

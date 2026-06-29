@@ -22,9 +22,17 @@ function filterBlogs(blogs: any[], category?: string | null, search?: string | n
     .filter((blog) => {
       if (!search) return true;
       const q = search.toLowerCase();
-      return [blog.title, blog.content, blog.excerpt, blog.location]
-        .filter(Boolean)
-        .some((value: string) => value.toLowerCase().includes(q));
+      const searchableValues = [
+        blog.title,
+        blog.seoTitle,
+        blog.metaDescription,
+        blog.content,
+        blog.excerpt,
+        blog.location,
+        ...(Array.isArray(blog.tags) ? blog.tags : []),
+      ].filter(Boolean);
+
+      return searchableValues.some((value: string) => value.toLowerCase().includes(q));
     })
     .sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime());
 }
@@ -68,9 +76,12 @@ export async function GET(request: Request) {
       filters.push({
         $or: [
           { title: searchRegex },
+          { seoTitle: searchRegex },
+          { metaDescription: searchRegex },
           { content: searchRegex },
           { excerpt: searchRegex },
-          { location: searchRegex }
+          { location: searchRegex },
+          { tags: searchRegex }
         ]
       });
     }
